@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-app2",
-    "slug": "my-app2",
+    "name": "HiveManager",
+    "slug": "HiveManager",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
