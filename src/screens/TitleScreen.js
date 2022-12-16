@@ -7,7 +7,7 @@ export const TitleScreen = ({navigation}) => {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
         <Text style={{color: 'white'}}>Title Screen</Text>
         <Image source={require('./tempLogo.jpg')} style={{width: 100, height: 100}}/>
-        <Button title='Start' color='red' onPress={() => navigation.navigate('LocationOverview')}/>
+        <Button title='Start' onPress={() => navigation.navigate('LocationOverview')}/>
       </View>
     );
   } 

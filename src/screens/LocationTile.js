@@ -1,33 +1,30 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
-import React, {  Component } from "react";
+import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import React from "react";
 
 
-export default class LocationTile extends Component {
-    render(props){
+export const LocationTile  = (props) => {
         return (
             <View style={styles.container } >
-                
                 <Image source={require('./Bauernhof.png')} style={styles.img}/>
-                <Text style={{color: 'white'}}>Test Hof</Text>
+                <Text style={{color: 'white'}}>{props.name} Test</Text>
+                <Button title={props.name}/>
             </View>
         );
-    }
 }
 
 const styles = StyleSheet.create({
 container:{
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 10,
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: 10,
+
 },
 img:{
-    flex:1,
-    width: 200,
-    height:300,
+    width: null,
+    height:null,
     resizeMode: 'contain'
 }
 });
