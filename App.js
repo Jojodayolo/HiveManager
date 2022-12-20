@@ -1,4 +1,3 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Appearance } from 'react-native';
 import { DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -10,8 +9,7 @@ import { LocationViewer } from './src/screens/LocationViewer';
 import { HiveCreator } from './src/screens/HiveCreator';
 import { DocumentationCreator } from './src/screens/DocumentationCreator';
 import { DocumentationViewer } from './src/screens/DocumentationViewer';
-
-
+import { AsyncStorage } from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 
