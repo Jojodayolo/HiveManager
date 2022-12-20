@@ -1,7 +1,6 @@
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
+import { Button, Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from "react";
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const LocationTile  = (props) => {
 
