@@ -1,9 +1,8 @@
 import { DarkTheme } from '@react-navigation/native';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import React, { Component, useState } from "react";
+import { StyleSheet, View } from 'react-native';
+import React from "react";
 import {LocationTile} from './LocationTile';
-import { AppRegistry } from 'react-native-web';
-import { FlatGrid } from 'react-native-super-grid';
+import  SuperGridSectionList  from 'react-native-super-grid';
 
 
 export const LocationOverview = () =>  {
@@ -32,33 +31,25 @@ export const LocationOverview = () =>  {
     { name: 'ASBESTOS', code: '#7f8c8d' },
   ]);
 
-
   return (
-    <SafeAreaView style={styles.container} >
-      <FlatGrid 
-        itemDimension={130} 
+    <View style={styles.container} >
+      <SuperGridSectionList 
+        itemDimension={120} 
         data={items}
+        spacing={40}
+        maxItemsPerRow={20}
         renderItem={({item}) => <LocationTile name={item.name} /> } 
         />
-    </SafeAreaView>
+    </View>
   );
 } 
 
 const styles = StyleSheet.create({
   container:{
-      alignItems: 'center',
       justifyContent: 'center',
       padding: 10,
       borderColor: 'white',
-      flexWrap:'wrap',
-
   },
-  LocTile:{
-    flex:1,
-    width: '30%',
-    height:'20%',
-    //resizeMode: 'contain'
-  }
   });
   
   

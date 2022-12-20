@@ -20,10 +20,12 @@ const styles = StyleSheet.create({
 container:{
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 10,
     borderColor: 'white',
     borderWidth: 2,
     borderRadius: 10,
+    width: 150,
+    height: 150,
+    textAlign: 'center'
 },
 img:{
     width: null,
