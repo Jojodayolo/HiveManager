@@ -38,7 +38,7 @@ export const LocationOverview = () =>  {
       <FlatGrid 
         itemDimension={130} 
         data={items}
-        renderItem={({item}) => <LocationTile name ={item.name}/> } 
+        renderItem={({item}) => <LocationTile name={item.name} /> } 
         />
     </SafeAreaView>
   );
