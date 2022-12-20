@@ -10,7 +10,7 @@ export const LocationTile  = (props) => {
     return (
         <View style={styles.container } >
             <Image source={require('./Bauernhof.png')} style={styles.img}/>
-            <Text style={{color: 'white'}}>{props.name} Test</Text>
+            <Text style={styles.tileText}>{props.name} Test</Text>
             <Button title={props.name} onPress={() => navigation.navigate('LocationViewer')}/>
         </View>
     );
@@ -31,5 +31,9 @@ img:{
     width: null,
     height:null,
     resizeMode: 'contain'
+},
+tileText:{
+    textAlign: 'center',
+    color: 'white'
 }
 });
