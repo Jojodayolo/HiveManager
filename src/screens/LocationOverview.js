@@ -1,40 +1,50 @@
-import { DarkTheme } from '@react-navigation/native';
-import { StyleSheet, View } from 'react-native';
-import React from "react";
-import {LocationTile} from './LocationTile';
-import  SuperGridSectionList  from 'react-native-super-grid';
+import { StyleSheet, View, Button } from "react-native";
+import React, { useEffect } from "react";
+import { LocationTile } from "./LocationTile";
+import SuperGridSectionList from "react-native-super-grid";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export const LocationOverview = () =>  {
+export const LocationOverview = () => {
+  const navigation = useNavigation();
 
-  const [items,setLocation] = React.useState([
-    {name: 'Hof1', image: './Bauernhof.png'},
-    {name: 'Hof2', image: './Bauernhof.png'},
-    {name: 'Hof3', image: './Bauernhof.png'},
-    {name: 'Hof4', image: './Bauernhof.png'},
-    {name: 'Hof5', image: './Bauernhof.png'},
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          title="Add"
+          onPress={() => navigation.navigate("LocationCreator")}
+        />
+      ),
+    });
+  });
+
+  const [items, setLocation] = React.useState([
+    { name: "Hof1", image: "./Bauernhof.png" },
+    { name: "Hof2", image: "./Bauernhof.png" },
+    { name: "Hof3", image: "./Bauernhof.png" },
+    { name: "Hof4", image: "./Bauernhof.png" },
+    { name: "Hof5", image: "./Bauernhof.png" },
   ]);
 
-  items.push({name:'add'})
-
   return (
-    <View style={styles.container} >
-      <SuperGridSectionList 
-        itemDimension={120} 
+    <View style={styles.container}>
+      <SuperGridSectionList
+        itemDimension={100}
         data={items}
-        spacing={40}
-        maxItemsPerRow={20}
-        renderItem={({item}) => <LocationTile name={item.name} /> } 
-        />
+        spacing={30}
+        maxItemsPerRow={5}
+        renderItem={({ item }) => <LocationTile name={item.name} />}
+      />
     </View>
   );
-} 
+};
 
 const styles = StyleSheet.create({
-  container:{
-      justifyContent: 'center',
-      padding: 10,
-      borderColor: 'white',
+  container: {
+    justifyContent: "center",
+    padding: 10,
+    borderColor: "white",
   },
-  });
-  
-  
+});
