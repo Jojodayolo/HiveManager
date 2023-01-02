@@ -12,15 +12,17 @@ import { useNavigation } from "@react-navigation/native";
 export const LocationTile = (props) => {
   const navigation = useNavigation();
 
+  let location = props.location;
+  console.log(location)
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("LocationViewer", { name: props.name })
+        navigation.navigate("LocationViewer", { name: location.name })
       }
     >
       <View style={styles.container}>
-        <Image source={require("./Bauernhof.png")} style={styles.img} />
-        <Text style={styles.tileText}>{props.name}</Text>
+        <Image source={require("../assets/imgs/Bauernhof.png")} style={styles.img} />
+        <Text style={styles.tileText}>{location.name}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -21,11 +21,11 @@ export const LocationOverview = () => {
   });
 
   const [items, setLocation] = React.useState([
-    { name: "Hof1", image: "./Bauernhof.png" },
-    { name: "Hof2", image: "./Bauernhof.png" },
-    { name: "Hof3", image: "./Bauernhof.png" },
-    { name: "Hof4", image: "./Bauernhof.png" },
-    { name: "Hof5", image: "./Bauernhof.png" },
+    { name: "Hof1", image: "../assets/imgs/Bauernhof.png" },
+    { name: "Hof2", image: "../assets/imgs/Bauernhof.png" },
+    { name: "Hof3", image: "../assets/imgs/Bauernhof.png" },
+    { name: "Hof4", image: "../assets/imgs/Bauernhof.png" },
+    { name: "Hof5", image: "../assets/imgs/Bauernhof.png" },
   ]);
 
   return (
@@ -35,7 +35,7 @@ export const LocationOverview = () => {
         data={items}
         spacing={30}
         maxItemsPerRow={5}
-        renderItem={({ item }) => <LocationTile name={item.name} />}
+        renderItem={({ item }) => <LocationTile location={item} />}
       />
     </View>
   );

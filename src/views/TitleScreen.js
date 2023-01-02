@@ -6,7 +6,7 @@ export const TitleScreen = ({navigation}) => {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
         <Text style={styles.title}>Hive Manager</Text>
-        <Image style={styles.img} source={require('./tempLogo.jpg')} />
+        <Image style={styles.img} source={require('../assets/imgs/tmpLogo.jpg')} />
         <Button title='Start' onPress={() => navigation.navigate('LocationOverview')}/>
       </View>
     );
