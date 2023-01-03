@@ -10,7 +10,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 export const HiveForm = () => {
-  const [text, onChangeText] = React.useState("Hivename");
+  const [text, onChangeText] = React.useState();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -31,6 +31,7 @@ export const HiveForm = () => {
           value={text}
         />
       </View>
+      
     </ScrollView>
   );
 };
