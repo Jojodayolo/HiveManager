@@ -1,15 +1,14 @@
-import { StyleSheet, Text, View, Appearance } from "react-native";
-import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+import { Appearance } from "react-native";
+import { DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { TitleScreen } from "./src/views/TitleScreen";
-import { LocationOverview } from "./src/views/LocationOverview";
-import { LocationCreator } from "./src/views/LocationCreator";
-import { LocationViewer } from "./src/views/LocationViewer";
-import { HiveCreator } from "./src/views/HiveCreator";
-import { DocumentationCreator } from "./src/views/DocumentationCreator";
+import { LocationShow } from "./src/views/LocationShow";
+import { LocationForm } from "./src/views/LocationForm";
+import { LocationList } from "./src/views/LocationList";
+import { HiveForm } from "./src/views/HiveForm";
+import { DocumentationForm } from "./src/views/DocumentationForm";
 import { DocumentationViewer } from "./src/views/DocumentationViewer";
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
 
 const Stack = createNativeStackNavigator();
 
@@ -25,11 +24,11 @@ export default function App({ navigation }) {
           backgroundColor="#fff"
           options={{ title: "HiveManager" }}/>
           
-        <Stack.Screen name="LocationOverview" component={LocationOverview} />
-        <Stack.Screen name="LocationCreator" component={LocationCreator} />
-        <Stack.Screen name="LocationViewer" component={LocationViewer} />
-        <Stack.Screen name="HiveCreator" component={HiveCreator} />
-        <Stack.Screen name="DocumentationCreator" component={DocumentationCreator}/>
+        <Stack.Screen name="LocationShow" component={LocationShow} />
+        <Stack.Screen name="LocationForm" component={LocationForm} />
+        <Stack.Screen name="LocationList" component={LocationList} />
+        <Stack.Screen name="HiveForm" component={HiveForm} />
+        <Stack.Screen name="DocumentationForm" component={DocumentationForm}/>
         <Stack.Screen name="DocumentationViewer" component={DocumentationViewer}/>
       </Stack.Navigator>
     </NavigationContainer>

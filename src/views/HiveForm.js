@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export const HiveCreator = () => {
+export const HiveForm = () => {
   const [text, onChangeText] = React.useState("Hivename");
   const navigation = useNavigation();
 

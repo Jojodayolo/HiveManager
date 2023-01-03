@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
+import { LocationDetail } from "./LocationDetail";
 
 const DATA = [
   {
@@ -25,9 +26,9 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-export const LocationViewer = ({ route }) => {
+export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
-
+  console.log(route);
   //Set the title to the Location Name
   const { name } = route.params;
   useEffect(() => {
@@ -36,7 +37,7 @@ export const LocationViewer = ({ route }) => {
       headerRight: () => (
         <Button
           title="Add"
-          onPress={() => navigation.navigate("HiveCreator")}
+          onPress={() => navigation.navigate("HiveForm")}
         />
       ),
     });
@@ -66,15 +67,9 @@ export const LocationViewer = ({ route }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
+      <LocationDetail style={{flex: 2}} />
+      
 
-      <View
-        style={{
-          flex: 2,
-          backgroundColor: "white",
-        }} /*Detail View about the Hive*/
-      >
-        <Text style={{ color: "black" }}>documentations</Text>
-      </View>
     </View>
   );
 };

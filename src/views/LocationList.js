@@ -1,12 +1,10 @@
 import { StyleSheet, View, Button } from "react-native";
 import React, { useEffect } from "react";
-import { LocationTile } from "./LocationTile";
+import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/FontAwesome";
 
-export const LocationOverview = () => {
+export const LocationList = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -14,7 +12,7 @@ export const LocationOverview = () => {
       headerRight: () => (
         <Button
           title="Add"
-          onPress={() => navigation.navigate("LocationCreator")}
+          onPress={() => navigation.navigate("LocationForm")}
         />
       ),
     });

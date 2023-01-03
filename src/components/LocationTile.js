@@ -17,7 +17,7 @@ export const LocationTile = (props) => {
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("LocationViewer", { name: location.name })
+        navigation.navigate("LocationShow", { name: location.name })
       }
     >
       <View style={styles.container}>

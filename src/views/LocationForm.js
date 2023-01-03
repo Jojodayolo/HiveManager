@@ -10,8 +10,10 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-export const LocationCreator = () => {
-  const [text, onChangeText] = React.useState();
+export const LocationForm = () => {
+  const [locationName, onChangeLocationName] = React.useState();
+  const [address, onChangeAddress] = React.useState();
+  const [notes, onChangeNotes] = React.useState();
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -27,24 +29,24 @@ export const LocationCreator = () => {
         <Text style={styles.inputLabel}>Location Name</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={onChangeLocationName}
+          value={locationName}
         />
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Address</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={onChangeAddress}
+          value={address}
         />
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Notes</Text>
         <TextInput
           style={styles.input}
-          onChangeText={onChangeText}
-          value={text}
+          onChangeText={onChangeNotes}
+          value={notes}
         />
       </View>
     </ScrollView>
