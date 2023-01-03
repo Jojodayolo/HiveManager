@@ -15,15 +15,16 @@ export const HiveForm = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button title="Save" />,
-      headerLeft: () => <Button title="Cancel" onPress={navigation.goBack} />,
+      headerRight: () => <Button title="Fertig" />,
+      headerLeft: () => <Button title="Abbrechen" onPress={navigation.goBack} />,
+      headerTitle: "Bienenstock hinzufügen",
     });
   });
 
   return (
     <ScrollView>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Hive Name</Text>
+        <Text style={styles.inputLabel}>Name</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}

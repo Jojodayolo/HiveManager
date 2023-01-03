@@ -28,7 +28,6 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
-  console.log(route);
   //Set the title to the Location Name
   const { name } = route.params;
   useEffect(() => {
@@ -36,7 +35,7 @@ export const LocationShow = ({ route }) => {
       title: name,
       headerRight: () => (
         <Button
-          title="Add"
+          title="Hinzufügen"
           onPress={() => navigation.navigate("HiveForm")}
         />
       ),

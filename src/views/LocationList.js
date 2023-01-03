@@ -11,10 +11,11 @@ export const LocationList = () => {
     navigation.setOptions({
       headerRight: () => (
         <Button
-          title="Add"
+          title="Hinzufügen"
           onPress={() => navigation.navigate("LocationForm")}
         />
       ),
+      headerTitle: "Übersicht",
     });
   });
 

@@ -18,15 +18,16 @@ export const LocationForm = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button title="Save" />,
-      headerLeft: () => <Button title="Cancel" onPress={navigation.goBack} />,
+      headerRight: () => <Button title="Fertig" />,
+      headerLeft: () => <Button title="Abbrechen" onPress={navigation.goBack} />,
+      headerTitle: "Standort hinzufügen",
     });
   });
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Location Name</Text>
+        <Text style={styles.inputLabel}>Name</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeLocationName}
@@ -34,7 +35,7 @@ export const LocationForm = () => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Address</Text>
+        <Text style={styles.inputLabel}>Addresse</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeAddress}
@@ -42,12 +43,17 @@ export const LocationForm = () => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Notes</Text>
+        <Text style={styles.inputLabel}>Notizen</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeNotes}
           value={notes}
         />
+      </View>
+      <View style={styles.inputBox}>
+        <Text style={styles.inputLabel}>Foto</Text>
+        
+        <Button title="Kamera öffnen"></Button>
       </View>
     </ScrollView>
   );
@@ -76,5 +82,6 @@ const styles = StyleSheet.create({
     width: "25%",
     padding: 10,
   },
-  scrollView: {},
+  scrollView: {
+  },
 });
