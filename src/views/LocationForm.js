@@ -17,6 +17,7 @@ export const LocationForm = () => {
   const [address, onChangeAddress] = React.useState();
   const [notes, onChangeNotes] = React.useState();
   const [photo, onChangePhoto] = React.useState();
+  
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const LocationForm = () => {
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Name</Text>
+        <Text style={styles.inputLabel}>Name:</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeLocationName}
@@ -40,7 +41,7 @@ export const LocationForm = () => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Addresse</Text>
+        <Text style={styles.inputLabel}>Addresse:</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeAddress}
@@ -48,7 +49,7 @@ export const LocationForm = () => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Notizen</Text>
+        <Text style={styles.inputLabel}>Notizen:</Text>
         <TextInput
           style={styles.bigInput}
           multiline={true}
@@ -57,7 +58,7 @@ export const LocationForm = () => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Bild hinzufügen</Text>
+        <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
         
         <Button title="Foto hinzufügen"
           onPress={onChangePhoto}
