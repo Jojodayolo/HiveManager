@@ -3,9 +3,17 @@ import React, { useEffect } from "react";
 import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+
+
+
 
 export const LocationList = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  var {locations} = useSelector((state) => state.locations);
+
+
 
   useEffect(() => {
     navigation.setOptions({
@@ -18,20 +26,13 @@ export const LocationList = () => {
       headerTitle: "Übersicht",
     });
   });
-
-  const [items, setLocation] = React.useState([
-    { name: "Hof1", image: "../assets/imgs/Bauernhof.png" },
-    { name: "Hof2", image: "../assets/imgs/Bauernhof.png" },
-    { name: "Hof3", image: "../assets/imgs/Bauernhof.png" },
-    { name: "Hof4", image: "../assets/imgs/Bauernhof.png" },
-    { name: "Hof5", image: "../assets/imgs/Bauernhof.png" },
-  ]);
+  console.log(locations);
 
   return (
     <View style={styles.container}>
       <SuperGridSectionList
         itemDimension={100}
-        data={items}
+        data={locations}
         spacing={30}
         maxItemsPerRow={5}
         renderItem={({ item }) => <LocationTile location={item} />}

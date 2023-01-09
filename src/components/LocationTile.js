@@ -1,5 +1,4 @@
 import {
-  Button,
   Image,
   StyleSheet,
   Text,
@@ -8,17 +7,22 @@ import {
 } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { removeLocation } from "../redux/actions";
+
 
 export const LocationTile = (props) => {
   const navigation = useNavigation();
-
   let location = props.location;
+  const dispatch = useDispatch();
+
   console.log(location)
   return (
     <TouchableOpacity
       onPress={() =>
         navigation.navigate("LocationShow", { name: location.name })
       }
+      onLongPress={() => dispatch(removeLocation(location.uuid))}
     >
       <View style={styles.container}>
         <Image source={require("../assets/imgs/Bauernhof.png")} style={styles.img} />

@@ -10,19 +10,28 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
+import { createLocation, getFirst } from "../redux/actions";
 
 export const LocationForm = () => {
   const [locationName, onChangeLocationName] = React.useState();
-  const [address, onChangeAddress] = React.useState();
-  const [notes, onChangeNotes] = React.useState();
-  const [photo, onChangePhoto] = React.useState();
+  const [locationAddress, onChangeAddress] = React.useState();
+  const [locationNotes, onChangeNotes] = React.useState();
+  const [locationPhoto, onChangePhoto] = React.useState();
   
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+
+  const onDone = () => {
+    dispatch(createLocation({name: locationName, address:locationAddress, notes: locationNotes}));
+    navigation.goBack();
+  }
+
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button title="Fertig" />,
+      headerRight: () => <Button title="Fertig" onPress={onDone} />,
       headerLeft: () => <Button title="Abbrechen" onPress={navigation.goBack} />,
       headerTitle: "Standort hinzufügen",
     });
@@ -45,7 +54,7 @@ export const LocationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeAddress}
-          value={address}
+          value={locationAddress}
         />
       </View>
       <View style={styles.inputBox}>
@@ -54,7 +63,7 @@ export const LocationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeNotes}
-          value={notes}
+          value={locationNotes}
         />
       </View>
       <View style={styles.inputBox}>

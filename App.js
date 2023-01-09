@@ -9,29 +9,31 @@ import { LocationList } from "./src/views/LocationList";
 import { HiveForm } from "./src/views/HiveForm";
 import { DocumentationForm } from "./src/views/DocumentationForm";
 import { DocumentationViewer } from "./src/views/DocumentationViewer";
+import { Provider } from 'react-redux';
+import  store  from './src/redux/store';
 
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
-  const colorScheme = Appearance.getColorScheme();
-
   return (
-    <NavigationContainer theme={DarkTheme}>
-      <Stack.Navigator initialRouteName="TitleScreen">
-        <Stack.Screen
-          name="TitleScreen"
-          component={TitleScreen}
-          backgroundColor="#fff"
-          options={{ title: "HiveManager" }}/>
-          
-        <Stack.Screen name="LocationShow" component={LocationShow} />
-        <Stack.Screen name="LocationForm" component={LocationForm} />
-        <Stack.Screen name="LocationList" component={LocationList} />
-        <Stack.Screen name="HiveForm" component={HiveForm} />
-        <Stack.Screen name="DocumentationForm" component={DocumentationForm}/>
-        <Stack.Screen name="DocumentationViewer" component={DocumentationViewer}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer theme={DarkTheme}>
+        <Stack.Navigator initialRouteName="TitleScreen">
+          <Stack.Screen
+            name="TitleScreen"
+            component={TitleScreen}
+            backgroundColor="#fff"
+            options={{ title: "HiveManager" }}/>
+            
+          <Stack.Screen name="LocationShow" component={LocationShow} />
+          <Stack.Screen name="LocationForm" component={LocationForm} />
+          <Stack.Screen name="LocationList" component={LocationList} />
+          <Stack.Screen name="HiveForm" component={HiveForm} />
+          <Stack.Screen name="DocumentationForm" component={DocumentationForm}/>
+          <Stack.Screen name="DocumentationViewer" component={DocumentationViewer}/>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
   );
 }
 

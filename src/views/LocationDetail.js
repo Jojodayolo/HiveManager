@@ -55,7 +55,7 @@ export const LocationDetail = () => {
     <View style={styles.container}>
       <Text style={styles.hiveTitle}>Placeholder Hive Name</Text>
 
-      <Button title='Dokumentationen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm')}/>
+      <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm')}/>
       <FlatList // The list of the Documentation for the selected hive
       style={{ flex: 1, backgroundColor: "black", marginTop: 20 }}
       data={DATA}
