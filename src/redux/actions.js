@@ -2,24 +2,22 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Platform } from "react-native";
 import uuid from "react-uuid";
 
-const locationInitialState = {
-  locations: [
-    {
-      uuid: "d96b98a2-517f-999c-20f1-0ab32e561d18",
-      name: "TestNameLoc",
-      address: "Home",
-      notes: "Dingsbums",
-      hiveIDs: [],
-    },
-    {
-      uuid: "691aeaf6-525f-11ee-9de2-89d3bccd3202",
-      name: "TestNameLoc2",
-      address: "Home2",
-      notes: "Dingsbums2",
-      hiveIDs: [],
-    },
-  ],
-};
+const locationInitialState = [
+  {
+    uuid: "d96b98a2-517f-999c-20f1-0ab32e561d18",
+    name: "TestNameLoc",
+    address: "Home",
+    notes: "Dingsbums",
+    hiveIDs: [1, 2],
+  },
+  {
+    uuid: "691aeaf6-525f-11ee-9de2-89d3bccd3202",
+    name: "TestNameLoc2",
+    address: "Home2",
+    notes: "Dingsbums2",
+    hiveIDs: [],
+  },
+];
 
 const locationsSlice = createSlice({
   name: "locations",
@@ -53,24 +51,24 @@ const locationsSlice = createSlice({
       return state.locations[0];
     },
     addHive: (state, action) => {
-      const hiveUuid = state.hives.createHive(action.payload.name);
-      state.forEach((loc) => {
+      //console.log(state, action);
+      //somehow call createHive and add the HiveId to the Location
+      /*state.forEach((loc) => {
         if (loc.uuid === action.payload.locUuid) {
           loc.hiveIDs.push(hiveUuid);
+          return;
         }
-      });
+      })*/
     },
   },
 });
 
 const hiveSlice = createSlice({
   name: "hives",
-  initialState: {
-    hives: [
-      { uuid: "1", name: "Hive1" },
-      { uuid: "2", name: "Hive2" },
-    ],
-  },
+  initialState: [
+    { uuid: "1", name: "Hive1" },
+    { uuid: "2", name: "Hive2" },
+  ],
   reducers: {
     createHive: (state, action) => {
       var newHive;
@@ -80,8 +78,13 @@ const hiveSlice = createSlice({
       return newHive.uuid;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(locationsSlice.actions.addHive, (state, action) => {
+      console.log("Test:", state, action);
+    });
+  },
 });
 
-export const { createLocation, removeLocation, getFirst } =
+export const { createLocation, removeLocation, getFirst, addHive } =
   locationsSlice.actions;
-export default locationsSlice.reducer;
+export { hiveSlice, locationsSlice };

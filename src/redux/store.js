@@ -1,16 +1,17 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import locationsReducer from "./actions";
+import { locationsSlice, hiveSlice } from "./actions";
 import logger from "redux-logger";
 import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
-  locations: locationsReducer,
+  locations: locationsSlice.reducer,
+  hives: hiveSlice.reducer,
 });
 
 const persistConfig = {
-  key: "root",
+  key: "root2",
   version: 1,
   storage: AsyncStorage,
 };
@@ -21,5 +22,6 @@ let store = configureStore({
   reducer: persisterReducer,
   middleware: [thunk, logger], //(getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
+
 let persistor = persistStore(store);
 export default { store, persistor };

@@ -3,6 +3,8 @@ import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { LocationDetail } from "./LocationDetail";
+import { useDispatch, useSelector } from "react-redux";
+import { filterHives } from "../redux/actions";
 
 const DATA = [
   {
@@ -28,19 +30,30 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
+  var locations = useSelector((state) => state.locations);
+  var hives = useSelector((state) => state.hives);
   //Set the title to the Location Name
-  const { name } = route.params;
+  const uuid = route.params.uuid;
+  const location = locations.filter((loc) => loc.uuid === uuid);
+  console.log(hives);
+
+  const localHives = hives.filter((hive) => location[0].hiveIDs.includes(hive));
+  //console.log(localHives);
+  //console.log(location[0].name);
+
   useEffect(() => {
     navigation.setOptions({
-      title: name,
+      title: location[0].name,
       headerRight: () => (
         <Button
           title="Hinzufügen"
-          onPress={() => navigation.navigate("HiveForm")}
+          onPress={() => navigation.navigate("HiveForm", { uuid: uuid })}
         />
       ),
     });
   });
+
+  const getLocalHives = () => {};
 
   //Item that gets Highlighted when selected
   const [selectedId, setSelectedId] = useState(null);
@@ -66,9 +79,7 @@ export const LocationShow = ({ route }) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-      <LocationDetail style={{flex: 2}} />
-      
-
+      <LocationDetail style={{ flex: 2 }} />
     </View>
   );
 };

@@ -9,11 +9,10 @@ export const LocationTile = (props) => {
   let location = props.location;
   const dispatch = useDispatch();
 
-  console.log(location);
   return (
     <TouchableOpacity
       onPress={() =>
-        navigation.navigate("LocationShow", { name: location.name })
+        navigation.navigate("LocationShow", { uuid: location.uuid })
       }
       onLongPress={() => {
         dispatch(removeLocation({ payload: location.uuid }));
