@@ -5,15 +5,10 @@ import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 
-
-
-
 export const LocationList = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  var {locations} = useSelector((state) => state.locations);
-
-
+  var locations = useSelector((state) => state.locations);
 
   useEffect(() => {
     navigation.setOptions({

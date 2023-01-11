@@ -1,25 +1,24 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import persistReducer from 'redux-persist/es/persistReducer';
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import locationsReducer from './actions';
-import logger from 'redux-logger';
+import locationsReducer from "./actions";
+import logger from "redux-logger";
 
 const rootReducer = combineReducers({
-
-    locations: locationsReducer,
+  locations: locationsReducer,
 });
 
 const persistConfig = {
-    key: 'root',
-    storage: AsyncStorage,
+  key: "root",
+  version: 1,
+  storage: AsyncStorage,
 };
 
 const persisterReducer = persistReducer(persistConfig, rootReducer);
 
-const store = configureStore({
-    
+let store = configureStore({
   reducer: persisterReducer,
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
-
-export default store;
+let persistor = persistStore(store);
+export default { store, persistor };
