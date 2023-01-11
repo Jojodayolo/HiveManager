@@ -50,7 +50,7 @@ export const LocationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeLocationName}
-          value={locationName}
+          value={locationName || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -58,7 +58,7 @@ export const LocationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeAddress}
-          value={locationAddress}
+          value={locationAddress || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -67,7 +67,7 @@ export const LocationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeNotes}
-          value={locationNotes}
+          value={locationNotes || ''}
         />
       </View>
       <View style={styles.inputBox}>

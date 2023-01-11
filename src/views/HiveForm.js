@@ -28,7 +28,7 @@ export const HiveForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
-          value={text}
+          value={text || ''}
         />
       </View>
       

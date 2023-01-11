@@ -9,35 +9,11 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import { Dropdown } from 'react-native-element-dropdown';
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
-/*
-const data = [
-  { label: 'Item 1', value: '1' },
-  { label: 'Item 2', value: '2' },
-  { label: 'Item 3', value: '3' },
-  { label: 'Item 4', value: '4' },
-];
-*/
+import DropdownComponent from "../components/Dropdown";
 
 export const DocumentationForm = () => {
-    
-    /*
-    const [isFocus, setIsFocus] = React.useState(false);
-    const [value, setValue] = React.useState(null);
-
-    const renderLabel = () => {
-      if (value || isFocus) {
-        return (
-          <Text style={[styles.label, isFocus && { color: 'white' }]}>
-            Dropdown label
-          </Text>
-        );
-      }
-      return null;
-    };*/
 
   const [population, onChangePopulation] = React.useState();
   const [honeycombs, onChangeHoneycombs] = React.useState();
@@ -72,34 +48,14 @@ export const DocumentationForm = () => {
       //Standard Inputs
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Volksstärke:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangePopulation}
-          value={population}
-        />
-        
-        <View>
-          {/*renderLabel()*/}
-          <Dropdown /*
-            data={data}
-            search
-            maxHeight={300}
-            onFocus={() => setIsFocus(true)}
-            onBlur={() => setIsFocus(false)}
-            onChange={item => {
-              setValue(item.value);
-              setIsFocus(false);
-            }}
-          *//>
-        </View>
-
+        <DropdownComponent/>
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Honigwaben (<b>kg</b>):</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeHoneycombs}
-          value={honeycombs}
+          value={honeycombs || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -107,7 +63,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeQueen}
-          value={queen}
+          value={queen || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -115,7 +71,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeFrame}
-          value={frame}
+          value={frame || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -123,7 +79,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeCells}
-          value={cells}
+          value={cells || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -131,7 +87,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeFed}
-          value={fed}
+          value={fed || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -140,7 +96,7 @@ export const DocumentationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeNotes}
-          value={notes}
+          value={notes || ''}
         />
       </View>
 
@@ -160,7 +116,7 @@ export const DocumentationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeDrugName}
-          value={drugName}
+          value={drugName || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -168,7 +124,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugAmount}
-          value={drugAmount}
+          value={drugAmount || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -177,7 +133,7 @@ export const DocumentationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeDrugSupplier}
-          value={drugSupplier}
+          value={drugSupplier || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -185,7 +141,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugReceiptnumber}
-          value={drugReceiptnumber}
+          value={drugReceiptnumber || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -194,7 +150,7 @@ export const DocumentationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeDrugColonyLocation}
-          value={drugColonyLocation}
+          value={drugColonyLocation || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -202,7 +158,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugColonyNumber}
-          value={drugColonyNumber}
+          value={drugColonyNumber || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -211,7 +167,7 @@ export const DocumentationForm = () => {
           style={styles.bigInput}
           multiline={true}
           onChangeText={onChangeDrugVetInfo}
-          value={drugVetInfo}
+          value={drugVetInfo || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -219,7 +175,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugWaitingperiod}
-          value={drugWaitingperiod}
+          value={drugWaitingperiod || ''}
         />
       </View>
       <View style={styles.inputBox}>
@@ -227,7 +183,7 @@ export const DocumentationForm = () => {
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugTreatmentDuration}
-          value={drugTreatmentDuration}
+          value={drugTreatmentDuration || ''}
         />
       </View>
 
