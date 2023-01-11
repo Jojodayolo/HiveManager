@@ -15,7 +15,9 @@ export const LocationTile = (props) => {
       onPress={() =>
         navigation.navigate("LocationShow", { name: location.name })
       }
-      onLongPress={() => dispatch(removeLocation(location.uuid))}
+      onLongPress={() => {
+        dispatch(removeLocation({ payload: location.uuid }));
+      }}
     >
       <View style={styles.container}>
         <Image

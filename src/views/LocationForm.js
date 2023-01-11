@@ -18,27 +18,31 @@ export const LocationForm = () => {
   const [locationAddress, onChangeAddress] = React.useState();
   const [locationNotes, onChangeNotes] = React.useState();
   const [locationPhoto, onChangePhoto] = React.useState();
-  
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-
   const onDone = () => {
-    dispatch(createLocation({name: locationName, address:locationAddress, notes: locationNotes}));
+    dispatch(
+      createLocation({
+        name: locationName,
+        address: locationAddress,
+        notes: locationNotes,
+      })
+    );
     navigation.goBack();
-  }
-
+  };
 
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <Button title="Fertig" onPress={onDone} />,
-      headerLeft: () => <Button title="Abbrechen" onPress={navigation.goBack} />,
+      headerLeft: () => (
+        <Button title="Abbrechen" onPress={navigation.goBack} />
+      ),
       headerTitle: "Standort hinzufügen",
     });
   });
 
-
-  
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.inputBox}>
@@ -68,15 +72,12 @@ export const LocationForm = () => {
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
-        
-        <Button title="Foto hinzufügen"
-          onPress={onChangePhoto}
-        />
+
+        <Button title="Foto hinzufügen" onPress={onChangePhoto} />
       </View>
     </ScrollView>
   );
 };
-
 
 const styles = StyleSheet.create({
   input: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "65%",
     marginRight: "10%",
-    textAlignVertical: "top"
+    textAlignVertical: "top",
   },
   inputBox: {
     flexDirection: "row",
@@ -111,6 +112,5 @@ const styles = StyleSheet.create({
     width: "25%",
     padding: 10,
   },
-  scrollView: {
-  },
+  scrollView: {},
 });

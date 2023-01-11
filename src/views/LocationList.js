@@ -9,7 +9,7 @@ export const LocationList = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   var locations = useSelector((state) => state.locations);
-
+  //console.log(locations.locations);
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -21,7 +21,6 @@ export const LocationList = () => {
       headerTitle: "Übersicht",
     });
   });
-  console.log(locations);
 
   return (
     <View style={styles.container}>

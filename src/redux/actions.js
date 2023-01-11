@@ -1,26 +1,29 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Platform } from "react-native";
 import uuid from "react-uuid";
+
+const locationInitialState = {
+  locations: [
+    {
+      uuid: "d96b98a2-517f-999c-20f1-0ab32e561d18",
+      name: "TestNameLoc",
+      address: "Home",
+      notes: "Dingsbums",
+      hiveIDs: [],
+    },
+    {
+      uuid: "691aeaf6-525f-11ee-9de2-89d3bccd3202",
+      name: "TestNameLoc2",
+      address: "Home2",
+      notes: "Dingsbums2",
+      hiveIDs: [],
+    },
+  ],
+};
 
 const locationsSlice = createSlice({
   name: "locations",
-  initialState: {
-    locations: [
-      {
-        uuid: "d96b98a2-517f-999c-20f1-0ab32e561d18",
-        name: "TestNameLoc",
-        address: "Home",
-        notes: "Dingsbums",
-        hiveIDs: [],
-      },
-      {
-        uuid: "691aeaf6-525f-11ee-9de2-89d3bccd3202",
-        name: "TestNameLoc2",
-        address: "Home2",
-        notes: "Dingsbums2",
-        hiveIDs: [],
-      },
-    ],
-  },
+  initialState: locationInitialState,
   reducers: {
     createLocation: (state, action) => {
       /*TODO:
@@ -40,7 +43,7 @@ const locationsSlice = createSlice({
     removeLocation: (state, action) => {
       //let serializedData = JSON.parse(state.locations);
       let newLocs = state.filter(
-        (location) => location.uuid !== action.payload
+        (location) => location.uuid !== action.payload.payload
       );
 
       state = Date.now();
