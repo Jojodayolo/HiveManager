@@ -12,6 +12,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { createLocation, getFirst } from "../redux/actions";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import LocationCamera from "./LocationCamera";
+import CameraButton from "../components/CameraButton";
 
 export const LocationForm = () => {
   const [locationName, onChangeLocationName] = React.useState();
@@ -72,8 +75,8 @@ export const LocationForm = () => {
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
-
-        <Button title="Foto hinzufügen" onPress={onChangePhoto} />
+        
+        <CameraButton title={'openCamera'} icon="camera" onPress={() => navigation.navigate("LocationCamera")}/>
       </View>
     </ScrollView>
   );
@@ -84,6 +87,7 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
+    borderRadius: 4,
     padding: 10,
     backgroundColor: "white",
     width: "65%",
@@ -93,11 +97,11 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 12,
     borderWidth: 1,
+    borderRadius: 4,
     padding: 10,
     backgroundColor: "white",
     width: "65%",
     marginRight: "10%",
-    textAlignVertical: "top",
   },
   inputBox: {
     flexDirection: "row",

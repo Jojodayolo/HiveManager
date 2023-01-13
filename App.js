@@ -6,6 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { TitleScreen } from "./src/views/TitleScreen";
 import { LocationShow } from "./src/views/LocationShow";
 import { LocationForm } from "./src/views/LocationForm";
+import { LocationCamera } from "./src/views/LocationCamera";
 import { LocationList } from "./src/views/LocationList";
 import { HiveForm } from "./src/views/HiveForm";
 import { DocumentationForm } from "./src/views/DocumentationForm";
@@ -32,6 +33,7 @@ export default function App({ navigation }) {
 
             <Stack.Screen name="LocationShow" component={LocationShow} />
             <Stack.Screen name="LocationForm" component={LocationForm} />
+            <Stack.Screen name="LocationCamera" component={LocationCamera} />
             <Stack.Screen name="LocationList" component={LocationList} />
             <Stack.Screen name="HiveForm" component={HiveForm} />
             <Stack.Screen

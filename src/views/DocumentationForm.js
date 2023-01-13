@@ -96,11 +96,7 @@ export const DocumentationForm = ({ route }) => {
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Königin gesehen <b>K</b> / Stifte <b>S:</b></Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeQueen}
-          value={queen || ''}
-        />
+        <DropdownComponent/>
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten):</Text>
@@ -234,6 +230,7 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 12,
     borderWidth: 1,
+    borderRadius: 4,
     padding: 10,
     backgroundColor: "white",
     width: "65%",
@@ -243,11 +240,11 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 12,
     borderWidth: 1,
+    borderRadius: 4,
     padding: 10,
     backgroundColor: "white",
     width: "65%",
     marginRight: "10%",
-    textAlignVertical: "top"
   },
   inputBox: {
     flexDirection: "row",

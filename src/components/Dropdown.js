@@ -48,7 +48,7 @@ const DropdownComponent = () => {
 const styles = StyleSheet.create({
     dropdown: {
         backgroundColor: 'white',
-        margin: 10,
+        margin: 9,
         width: '65%',
         borderWidth: 1,
         borderColor: 'white',
