@@ -8,7 +8,7 @@ const locationInitialState = [
     name: "TestNameLoc",
     address: "Home",
     notes: "Dingsbums",
-    hiveIDs: [1, 2],
+    hiveIDs: ['4538b7d7-11f0-3e71-4ec9-9a0765c8ef6d'],
   },
   {
     uuid: "691aeaf6-525f-11ee-9de2-89d3bccd3202",
@@ -53,38 +53,109 @@ const locationsSlice = createSlice({
     addHive: (state, action) => {
       //console.log(state, action);
       //somehow call createHive and add the HiveId to the Location
-      /*state.forEach((loc) => {
+
+      state.forEach((loc) => {
         if (loc.uuid === action.payload.locUuid) {
-          loc.hiveIDs.push(hiveUuid);
-          return;
+          loc.hiveIDs.push(action.payload.hiveUuid);
         }
-      })*/
+      })
     },
   },
 });
 
 const hiveSlice = createSlice({
   name: "hives",
-  initialState: [
-    { uuid: "1", name: "Hive1" },
-    { uuid: "2", name: "Hive2" },
-  ],
+  initialState: { 
+    hives:[{
+      uuid:'4538b7d7-11f0-3e71-4ec9-9a0765c8ef6d',
+      name:'',
+      docIDs:['1']
+    }],
+    newestHiveID:''
+  },
   reducers: {
     createHive: (state, action) => {
-      var newHive;
-      newHive.uuid = uuid();
-      newHive.name = action.payload.name;
-      state.hives.push(newHive);
-      return newHive.uuid;
+      const newUuid = uuid();  
+
+      state.hives.push({
+        uuid: newUuid,
+        name: action.payload.name,
+        docIDs: [],
+      });
+      state.newestHiveID = newUuid;
+    },
+    addDoc: (state, action) => {
+      state.hives.forEach((hive) => {
+        if (hive.uuid === action.payload.hiveUuid) {
+          hive.docIDs.push(action.payload.docUuid);
+        }
+      })
     },
   },
-  extraReducers: (builder) => {
-    builder.addCase(locationsSlice.actions.addHive, (state, action) => {
-      console.log("Test:", state, action);
-    });
+});
+
+const documentationSlice = createSlice({
+  name: "documentations",
+  initialState: { 
+    documentations:[
+      {
+        uuid: '1',
+        date: new Date(),
+        population:'',
+        honeycombs:'',
+        queen:'',
+        frame:'',
+        cells:'',
+        fed:'',
+        notes:'',
+        drugData:{
+          name:'',
+          amount:'',
+          supplier:'',
+          receiptnumber:'',
+          colonyLocation:'',
+          colonyNumber:'',
+          vetInfo:'',
+          waitingPeriod:'',
+          treatmentDuration:'',
+        }
+      },
+    ],
+    newestDocID:''
+  },
+  reducers: {
+    createDoc: (state, action) => {
+      const newUuid = uuid();  
+
+      state.documentations.push({
+        uuid: newUuid,
+        date: new Date(),
+        population:action.payload.population,
+        honeycombs:action.payload.honeycombs,
+        queen:action.payload.queen,
+        frame:action.payload.frame,
+        cells:action.payload.cells,
+        fed:action.payload.fed,
+        notes:action.payload.notes,
+        drugData:{
+          name:action.payload.drugData.name,
+          amount:action.payload.drugData.amount,
+          supplier:action.payload.drugData.supplier,
+          receiptnumber:action.payload.drugData.receiptnumber,
+          colonyLocation:action.payload.drugData.colonyLocation,
+          colonyNumber:action.payload.drugData.colonyNumber,
+          vetInfo:action.payload.drugData.vetInfo,
+          waitingPeriod:action.payload.drugData.waitingPeriod,
+          treatmentDuration:action.payload.drugData.treatmentDuration,
+        },
+      });
+      state.newestDocID = newUuid;
+    },
   },
 });
 
 export const { createLocation, removeLocation, getFirst, addHive } =
   locationsSlice.actions;
-export { hiveSlice, locationsSlice };
+export const {createHive, addDoc} = hiveSlice.actions;
+export const {createDoc} = documentationSlice.actions;
+export { hiveSlice, locationsSlice, documentationSlice };

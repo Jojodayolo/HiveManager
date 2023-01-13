@@ -13,9 +13,11 @@ import { DocumentationViewer } from "./src/views/DocumentationViewer";
 import { Provider } from "react-redux";
 import Store from "./src/redux/store";
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App({ navigation }) {
+  Store.persistor.purge();
   return (
     <Provider store={Store.store}>
       <PersistGate loading={null} persistor={Store.persistor}>
@@ -44,6 +46,7 @@ export default function App({ navigation }) {
         </NavigationContainer>
       </PersistGate>
     </Provider>
+
   );
 }
 

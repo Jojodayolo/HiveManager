@@ -12,40 +12,76 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import DropdownComponent from "../components/Dropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { addDoc, createDoc } from "../redux/actions";
+import Store from "../redux/store";
 
-export const DocumentationForm = () => {
+export const DocumentationForm = ({ route }) => {
+  const uuid = route.params.uuid;
+  console.log(route);
+  const [population, onChangePopulation] = React.useState('');
+  const [honeycombs, onChangeHoneycombs] = React.useState('');
+  const [queen, onChangeQueen] = React.useState('');
+  const [frame, onChangeFrame] = React.useState('');
+  const [cells, onChangeCells] = React.useState('');
+  const [fed, onChangeFed] = React.useState('');
+  const [notes, onChangeNotes] = React.useState('');
 
-  const [population, onChangePopulation] = React.useState();
-  const [honeycombs, onChangeHoneycombs] = React.useState();
-  const [queen, onChangeQueen] = React.useState();
-  const [frame, onChangeFrame] = React.useState();
-  const [cells, onChangeCells] = React.useState();
-  const [fed, onChangeFed] = React.useState();
-  const [notes, onChangeNotes] = React.useState();
-
-  const [drugName, onChangeDrugName] = React.useState();
-  const [drugAmount, onChangeDrugAmount] = React.useState();
-  const [drugSupplier, onChangeDrugSupplier] = React.useState();
-  const [drugReceiptnumber, onChangeDrugReceiptnumber] = React.useState();
-  const [drugColonyLocation, onChangeDrugColonyLocation] = React.useState();
-  const [drugColonyNumber, onChangeDrugColonyNumber] = React.useState();
-  const [drugVetInfo, onChangeDrugVetInfo] = React.useState();
-  const [drugWaitingperiod, onChangeDrugWaitingperiod] = React.useState();
-  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] = React.useState();
+  const [drugName, onChangeDrugName] = React.useState('');
+  const [drugAmount, onChangeDrugAmount] = React.useState('');
+  const [drugSupplier, onChangeDrugSupplier] = React.useState('');
+  const [drugReceiptnumber, onChangeDrugReceiptnumber] = React.useState('');
+  const [drugColonyLocation, onChangeDrugColonyLocation] = React.useState('');
+  const [drugColonyNumber, onChangeDrugColonyNumber] = React.useState('');
+  const [drugVetInfo, onChangeDrugVetInfo] = React.useState('');
+  const [drugWaitingperiod, onChangeDrugWaitingperiod] = React.useState('');
+  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] = React.useState('');
   
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
+  const onDone = () => {
+    dispatch(
+      createDoc({
+        population:population,
+        honeycombs:honeycombs,
+        queen:queen,
+        frame:frame,
+        cells:cells,
+        fed:fed,
+        notes:notes,
+        drugData:{
+          name:drugName,
+          amount:drugAmount,
+          supplier:drugSupplier,
+          receiptnumber:drugReceiptnumber,
+          colonyLocation:drugColonyLocation,
+          colonyNumber:drugColonyNumber,
+          vetInfo:drugVetInfo,
+          waitingPeriod:drugWaitingperiod,
+          treatmentDuration:drugTreatmentDuration,
+        }
+    }));
+    const state = Store.store.getState();
+    console.log(uuid);
+    console.log(state.documentations.newestDocID);
+    dispatch(
+      addDoc({hiveUuid: uuid, docUuid: state.documentations.newestDocID})
+    );
+    navigation.goBack();
+  }
 
   useEffect(() => {
     navigation.setOptions({
-      headerRight: () => <Button title="Fertig" />,
+      headerRight: () => <Button title="Fertig" onPress={onDone} />,
       headerLeft: () => <Button title="Abbrechen" onPress={navigation.goBack} />,
       headerTitle: "Eintrag hinzufügen",
     });
   });
   
-  return (
+  return (<View>
     <ScrollView style={styles.scrollView}>
-      //Standard Inputs
+      {/*Standard Inputs*/}
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Volksstärke:</Text>
         <DropdownComponent/>
@@ -100,7 +136,7 @@ export const DocumentationForm = () => {
         />
       </View>
 
-      //Standoff
+      {/*Standoff*/}
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
           <View>
@@ -109,7 +145,7 @@ export const DocumentationForm = () => {
         <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
       </View>
 
-      //Drug inputs
+      {/*Drug inputs*/}
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge):</Text>
         <TextInput
@@ -189,6 +225,7 @@ export const DocumentationForm = () => {
 
       
     </ScrollView>
+    </View>
   );
 };
 

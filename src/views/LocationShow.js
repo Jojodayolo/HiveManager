@@ -4,42 +4,39 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { LocationDetail } from "./LocationDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { filterHives } from "../redux/actions";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "First Item",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Second Item",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Third Item",
-  },
-];
+//TODO: - what if no Hives exist?
 
 //The List Item to be rendered
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity style={[styles.item, backgroundColor]} onPress={onPress}>
-    <Text style={styles.title}>{item.title}</Text>
+    <Text style={styles.title}>{item.name || 'Empty'}</Text>
   </TouchableOpacity>
 );
 
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
   var locations = useSelector((state) => state.locations);
-  var hives = useSelector((state) => state.hives);
+  var hives = useSelector((state) => state.hives.hives);
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.uuid === selectedId ? "#157EFB" : "#38343C";
+    const color = item.uuid === selectedId ? "white" : "black";
+    return (
+      <Item
+        item={item}
+        onPress={() => setSelectedId(item.uuid)}
+        backgroundColor={{ backgroundColor }}
+        textColor={{ color }}
+      />
+    );
+  };
   //Set the title to the Location Name
   const uuid = route.params.uuid;
+  //Get all locations and filter the Selected one 
   const location = locations.filter((loc) => loc.uuid === uuid);
-  console.log(hives);
 
-  const localHives = hives.filter((hive) => location[0].hiveIDs.includes(hive));
-  //console.log(localHives);
-  //console.log(location[0].name);
+  //get all hives and filter the hives that belong to the location
+  const localHives = hives.filter((hive) => location[0].hiveIDs.includes(hive.uuid));
 
   useEffect(() => {
     navigation.setOptions({
@@ -53,35 +50,43 @@ export const LocationShow = ({ route }) => {
     });
   });
 
-  const getLocalHives = () => {};
+  const [selectedId, setSelectedId] = useState();
+  try {
+    const [selectedId, setSelectedId] = useState(localHives[0].uuid);
+  } catch (error) {
+
+  }
 
   //Item that gets Highlighted when selected
-  const [selectedId, setSelectedId] = useState(null);
-  const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#157EFB" : "#38343C";
-    const color = item.id === selectedId ? "white" : "black";
+  if(localHives.length === 0){
+    console.log(localHives)
+    return(    
+    <View style={[styles.container, { flexDirection: "row" }]}>
 
-    return (
-      <Item
-        item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-    );
-  };
+      <View style={{ flex: 1, backgroundColor: "black" }}>
+        <Text style={{color: 'white', textAlign: 'center', padding:20}} >Currently no Hives here</Text>
+      </View>
+      <View style={{ flex: 2, backgroundColor:"#38343C"}} />
+    </View>
+  );
+  }
+
+
+
 
   return (
     <View style={[styles.container, { flexDirection: "row" }]}>
       <FlatList // The list of the Hives at the selected Location
         style={{ flex: 1, backgroundColor: "black" }}
-        data={DATA}
+        data={localHives}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uuid}
+        ListEmptyComponent={<View/>}
       />
-      <LocationDetail style={{ flex: 2 }} />
+      <LocationDetail style={{ flex: 2 }} uuid={selectedId} />
     </View>
   );
+  //
 };
 
 const styles = StyleSheet.create({

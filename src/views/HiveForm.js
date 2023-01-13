@@ -8,15 +8,17 @@ import {
   Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { addHive } from "../redux/actions";
+import { useDispatch, useSelector, useState } from "react-redux";
+import { addHive, createHive } from "../redux/actions";
+import Store from "../redux/store";
+
 
 export const HiveForm = ({ route }) => {
   const [hiveName, onChangeText] = React.useState();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const uuid = route.params.uuid;
-
+  
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <Button title="Fertig" onPress={onDone} />,
@@ -28,15 +30,10 @@ export const HiveForm = ({ route }) => {
   });
 
   const onDone = () => {
-    //TODO:
-    /* - create New Hive
-     * - add the new Hive to the Location
-     */
+    dispatch(createHive({name:hiveName}));
+    const state = Store.store.getState();
     dispatch(
-      addHive({
-        locUuid: uuid,
-        name: hiveName,
-      })
+      addHive({locUuid: uuid, hiveUuid: state.hives.newestHiveID})
     );
     navigation.goBack();
   };

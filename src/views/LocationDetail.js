@@ -2,44 +2,27 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch, useSelector } from "react-redux";
 
-const DATA = [
-  {
-    id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-    title: "Doc 1",
-    date: "12.12.2012",
-  },
-  {
-    id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-    title: "Doc2",
-    date: "12.12.2012",
-  },
-  {
-    id: "58694a0f-3da1-471f-bd96-145571e29d72",
-    title: "Doc 3",
-    date: "12.12.2012",
-  },
-];
 
+// needs a style rework text is alwys black
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity style={[styles.item, backgroundColor]} onPress={onPress}>
-    <Text style={styles.title}>{item.date}</Text>
-    <Text style={styles.title}>{item.title}</Text>
+    <Text style={styles.name}>{ item.date.getDate() + "." + (item.date.getMonth() + 1) + "." + item.date.getFullYear() + " " + item.date.getHours() + ":" + item.date.getMinutes()}</Text>
+    <Text style={styles.name}>{item.name }</Text>
   </TouchableOpacity>
 );
 
-export const LocationDetail = () => {
+export const LocationDetail = (props) => {
   const navigation = useNavigation();
-
-
-  //Item that gets Highlighted when selected
   const [selectedId, setSelectedId] = useState(null);
+  //Item that gets Highlighted when selected
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#157EFB" : "#38343C";
-    const color = item.id === selectedId ? "white" : "black";
+    const backgroundColor = item.uuid === selectedId ? "#157EFB" : "#38343C";
+    const color = item.uuid === selectedId ? "white" : "white";
     const onDocSelected = () => {
-      setSelectedId(item.id);
-      navigation.navigate("DocumentationViewer");
+      setSelectedId(item.uuid);
+      navigation.navigate("DocumentationViewer", {uuid:selectedId});
     }
     return (
       <Item
@@ -51,16 +34,44 @@ export const LocationDetail = () => {
     );
   };
 
+  //Get the selected Hive
+  const selectedHive = useSelector((state) => state.hives.hives.filter((hive) => hive.uuid === props.uuid));
+  
+  //Filter the documentations for the ones that belong to the hive
+  const documentations = useSelector((state) => state.documentations);
+  var localDocs;
+  try {
+    localDocs = documentations.documentations.filter((doc) => selectedHive[0].docIDs.includes(doc.uuid));
+  } catch (error) {
+    localDocs = [];
+    console.log(error);
+  }
+
+  //dont display a list if there are no docs or display nothing if no hive is selected(second should only happen if a location has no hives)
+  if(props.uuid === null || selectedHive.length === 0){
+    return(
+      <View style={styles.container}/>
+    )
+  }else if( localDocs.length === 0){
+    console.log(selectedId)
+    return(
+      <View style={styles.container}>
+        <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
+        <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedId})}/>
+      </View>
+    )
+  }
+
+  //Full render if data is available
   return (
     <View style={styles.container}>
-      <Text style={styles.hiveTitle}>Placeholder Hive Name</Text>
-
-      <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm')}/>
+      <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
+      <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedId})}/>
       <FlatList // The list of the Documentation for the selected hive
-      style={{ flex: 1, backgroundColor: "black", marginTop: 20 }}
-      data={DATA}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
+        style={{ flex: 1, backgroundColor: "black", marginTop: 20 }}
+        data={localDocs}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.uuid}
       />
     </View>
   );

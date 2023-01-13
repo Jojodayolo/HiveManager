@@ -9,7 +9,8 @@ export const LocationList = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   var locations = useSelector((state) => state.locations);
-  console.log(locations.locations);
+
+
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
