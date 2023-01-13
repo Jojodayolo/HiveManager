@@ -40,11 +40,11 @@ export const DocumentationViewer = ({route}) => {
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Honigwaben (<b>kg</b>):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].honeycombs}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Königin gesehen <b>K</b> / Stifte <b>S:</b></Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].queen}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten):</Text>
@@ -52,15 +52,15 @@ export const DocumentationViewer = ({route}) => {
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Weiselzellen:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].cells}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Gefüttert (<b>ml/kg</b>):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].fed}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Notizen:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].notes}</Text>
         </View>
 
         {/*Standoff*/}
@@ -75,39 +75,39 @@ export const DocumentationViewer = ({route}) => {
         {/*Drug inputs*/}
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.name}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Menge pro Bienenvolk (<b>ml</b>):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.amount}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Name und Anschrift des Lieferanten:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.supplier}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Belegnummer:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.receiptnumber}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Standort der Bienenvölker (Flurnummer oder Bezeichnung):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.colonyLocation}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Nummern der Bienenvölker:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.colonyNumber}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Ggf. Name und Anschrift des Tierarztes:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.vetInfo}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Wartezeit (Laut Packungsbeilage):</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.waitingPeriod}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Behandlungsdauer:</Text>
-          <Text style={styles.outputLabel}></Text>
+          <Text style={styles.outputLabel}>{currentDocument[0].drugData.treatmentDuration}</Text>
         </View>
       </ScrollView>
     );
