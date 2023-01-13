@@ -17,10 +17,10 @@ import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 
 export const LocationForm = () => {
-  const [locationName, onChangeLocationName] = React.useState();
-  const [locationAddress, onChangeAddress] = React.useState();
-  const [locationNotes, onChangeNotes] = React.useState();
-  const [locationPhoto, onChangePhoto] = React.useState();
+  const [locationName, onChangeLocationName] = React.useState('');
+  const [locationAddress, onChangeAddress] = React.useState('');
+  const [locationNotes, onChangeNotes] = React.useState('');
+  const [locationPhoto, onChangePhoto] = React.useState('');
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ export const LocationForm = () => {
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
         
-        <CameraButton title={'openCamera'} icon="camera" onPress={() => navigation.navigate("LocationCamera")}/>
+        <CameraButton title={'openCamera'} icon="camera" onPress={() => navigation.navigate("LocationCamera")} />
       </View>
     </ScrollView>
   );
@@ -118,3 +118,5 @@ const styles = StyleSheet.create({
   },
   scrollView: {},
 });
+/*() => navigation.navigate("LocationCamera")
+<CameraButton title={'openCamera'} icon="camera" />*/

@@ -22,7 +22,7 @@ export const LocationDetail = (props) => {
     const color = item.uuid === selectedId ? "white" : "white";
     const onDocSelected = () => {
       setSelectedId(item.uuid);
-      navigation.navigate("DocumentationViewer", {uuid:selectedId});
+      navigation.navigate("DocumentationViewer", {uuid:item.uuid});
     }
     return (
       <Item
@@ -36,7 +36,7 @@ export const LocationDetail = (props) => {
 
   //Get the selected Hive
   const selectedHive = useSelector((state) => state.hives.hives.filter((hive) => hive.uuid === props.uuid));
-  
+
   //Filter the documentations for the ones that belong to the hive
   const documentations = useSelector((state) => state.documentations);
   var localDocs;
@@ -44,7 +44,6 @@ export const LocationDetail = (props) => {
     localDocs = documentations.documentations.filter((doc) => selectedHive[0].docIDs.includes(doc.uuid));
   } catch (error) {
     localDocs = [];
-    console.log(error);
   }
 
   //dont display a list if there are no docs or display nothing if no hive is selected(second should only happen if a location has no hives)
@@ -53,11 +52,11 @@ export const LocationDetail = (props) => {
       <View style={styles.container}/>
     )
   }else if( localDocs.length === 0){
-    console.log(selectedId)
+    console.log(selectedHive[0].name)
     return(
       <View style={styles.container}>
         <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
-        <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedId})}/>
+        <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedHive[0].uuid})}/>
       </View>
     )
   }
@@ -66,7 +65,11 @@ export const LocationDetail = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
-      <Button title='Dokumentationen Hinzufügen' style={styles.docButton} onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedId})}/>
+      <Button 
+        title='Dokumentationen Hinzufügen' 
+        style={styles.docButton} 
+        onPress={() => navigation.navigate('DocumentationForm', {uuid:selectedHive[0].uuid})}
+      />
       <FlatList // The list of the Documentation for the selected hive
         style={{ flex: 1, backgroundColor: "black", marginTop: 20 }}
         data={localDocs}

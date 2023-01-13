@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from 'expo-media-library';
 import React, { useState, useEffect, useRef } from "react";
@@ -78,7 +78,7 @@ export const LocationCamera = () => {
     );
 }
 
-const stlyes = StyleSheet({
+const stlyes = StyleSheet.create({
     container: {
         paddingBottom: 20,
         flex: 1,
@@ -89,4 +89,4 @@ const stlyes = StyleSheet({
         flex: 1,
         borderRadius: 20,
     }
-})
+});

@@ -10,7 +10,6 @@ import {
   Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
 import DropdownComponent from "../components/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { addDoc, createDoc } from "../redux/actions";
@@ -79,15 +78,18 @@ export const DocumentationForm = ({ route }) => {
     });
   });
   
-  return (<View>
+  return (
     <ScrollView style={styles.scrollView}>
-      {/*Standard Inputs*/}
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Volksstärke:</Text>
         <DropdownComponent/>
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Honigwaben (<b>kg</b>):</Text>
+      <Text>
+        <Text style={styles.inputLabel}>Honigwaben </Text>
+        <Text style={styles.inputLabelBold}>(kg)</Text>
+        <Text style={styles.inputLabel}>:</Text>
+      </Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeHoneycombs}
@@ -95,7 +97,11 @@ export const DocumentationForm = ({ route }) => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Königin gesehen <b>K</b> / Stifte <b>S:</b></Text>
+        <Text>
+          <Text style={styles.inputLabel}>Königin gesehen </Text>
+          <Text style={styles.inputLabelBold}> K / Sifte S</Text>
+          <Text style={styles.inputLabel}>:</Text>
+        </Text>
         <DropdownComponent/>
       </View>
       <View style={styles.inputBox}>
@@ -115,7 +121,11 @@ export const DocumentationForm = ({ route }) => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Gefüttert (<b>ml/kg</b>):</Text>
+        <Text>
+          <Text style={styles.inputLabel}>Gefüttert </Text>
+          <Text style={styles.inputLabelBold}>(ml/kg)</Text>
+          <Text style={styles.inputLabel}>:</Text>
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeFed}
@@ -132,7 +142,7 @@ export const DocumentationForm = ({ route }) => {
         />
       </View>
 
-      {/*Standoff*/}
+      
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
           <View>
@@ -141,7 +151,7 @@ export const DocumentationForm = ({ route }) => {
         <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
       </View>
 
-      {/*Drug inputs*/}
+
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge):</Text>
         <TextInput
@@ -152,7 +162,11 @@ export const DocumentationForm = ({ route }) => {
         />
       </View>
       <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Menge pro Bienenvolk (<b>ml</b>):</Text>
+        <Text>
+          <Text style={styles.inputLabel}>Menge pro Bienenvolk </Text>
+          <Text style={styles.inputLabelBold}>(ml)</Text>
+          <Text style={styles.inputLabel}>:</Text>
+        </Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeDrugAmount}
@@ -218,10 +232,7 @@ export const DocumentationForm = ({ route }) => {
           value={drugTreatmentDuration || ''}
         />
       </View>
-
-      
     </ScrollView>
-    </View>
   );
 };
 
@@ -258,6 +269,13 @@ const styles = StyleSheet.create({
     color: "white",
     width: "25%",
     padding: 10,
+  },
+  inputLabelBold:{
+    textAlign: "right",
+    color: "white",
+    width: "25%",
+    padding: 10,
+    fontWeight:'bold',
   },
   scrollView: {
   },

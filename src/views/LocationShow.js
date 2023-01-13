@@ -50,12 +50,14 @@ export const LocationShow = ({ route }) => {
     });
   });
 
-  const [selectedId, setSelectedId] = useState();
-  try {
-    const [selectedId, setSelectedId] = useState(localHives[0].uuid);
-  } catch (error) {
+var locHiveID = '';
+if(localHives.length !== 0){
+  locHiveID = localHives[0].uuid;
+}
 
-  }
+  const [selectedId, setSelectedId] = useState(locHiveID);
+
+  
 
   //Item that gets Highlighted when selected
   if(localHives.length === 0){
