@@ -9,7 +9,6 @@ export const LocationCamera = () => {
     const [hasCameraPermission, setHasCameraPermission] = useState(null);
     const [image, setImage] = useState(null);
     const [type, setType] = useEffect(Camera.Constants.Type.back);
-    const [flash, setFlash] = useState(Camera.Constants.FlashMode.off);
     const cameraRef = useRef(null);
 
     useEffect(() => {
@@ -53,9 +52,17 @@ export const LocationCamera = () => {
             <Camera 
                 style={stlyes.camera}
                 type={type}
-                flashMode={flash}
                 ref={cameraRef}
             >
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: "space-between",
+                    padding: 30,
+                }}>
+                    <CameraButton icon={'retweet'} onPress={() => {
+                        setType(type === CameraType.back ? CameraType.front : CameraType.back);
+                    }}/>
+                </View>    
             </Camera>
             :
             <Image source={{uri: Image}} style={stlyes.camera}/>
@@ -71,7 +78,7 @@ export const LocationCamera = () => {
                     <CameraButton title={"Save"} icon="check" onPress={saveImage}/>
                 </View>
                 :
-                <CameraButton title={'Take a picture'} icon="camera"/>
+                <CameraButton title={'Take a picture'} icon="camera" onPress={takePicture}/>
                 }    
             </View>
         </View>
