@@ -1,16 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Text, View, Button } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import {
+  StyleSheet,
+  FlatList,
+  Text,
+  View,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LocationDetail } from "./LocationDetail";
 import { useDispatch, useSelector } from "react-redux";
-
-//TODO: - what if no Hives exist?
+import { defaultStyles } from "./Styles";
+import DeleteMenu from "../components/DeleteMenu";
+import {
+  DividerHorizontal,
+  DividerVertical,
+} from "../components/designComonents";
 
 //The List Item to be rendered
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
-  <TouchableOpacity style={[styles.item, backgroundColor]} onPress={onPress}>
-    <Text style={styles.title}>{item.name || 'Empty'}</Text>
+  <TouchableOpacity
+    style={[defaultStyles.hiveListItem, backgroundColor]}
+    onPress={onPress}
+  >
+    <View flex={1} style={{ width: "80%" }}>
+      <Text>{item.name || ""}</Text>
+    </View>
+    <View flex={2} style={{}}>
+      <DeleteMenu />
+    </View>
   </TouchableOpacity>
 );
 
@@ -18,8 +36,9 @@ export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
   var locations = useSelector((state) => state.locations);
   var hives = useSelector((state) => state.hives.hives);
+  const [selectedId, setSelectedId] = useState();
   const renderItem = ({ item }) => {
-    const backgroundColor = item.uuid === selectedId ? "#157EFB" : "#38343C";
+    const backgroundColor = item.uuid === selectedId ? "#157EFB" : "white";
     const color = item.uuid === selectedId ? "white" : "black";
     return (
       <Item
@@ -30,14 +49,19 @@ export const LocationShow = ({ route }) => {
       />
     );
   };
+
   //Set the title to the Location Name
   const uuid = route.params.uuid;
-  //Get all locations and filter the Selected one 
+
+  //Get all locations and filter the Selected one
   const location = locations.filter((loc) => loc.uuid === uuid);
 
   //get all hives and filter the hives that belong to the location
-  const localHives = hives.filter((hive) => location[0].hiveIDs.includes(hive.uuid));
+  const localHives = hives.filter((hive) =>
+    location[0].hiveIDs.includes(hive.uuid)
+  );
 
+  //Setting the Navigation Title and Buttons
   useEffect(() => {
     navigation.setOptions({
       title: location[0].name,
@@ -50,59 +74,28 @@ export const LocationShow = ({ route }) => {
     });
   });
 
-var locHiveID = '';
-if(localHives.length !== 0){
-  locHiveID = localHives[0].uuid;
-}
-
-  const [selectedId, setSelectedId] = useState(locHiveID);
-
-  
-
-  //Item that gets Highlighted when selected
-  if(localHives.length === 0){
-    console.log(localHives)
-    return(    
-    <View style={[styles.container, { flexDirection: "row" }]}>
-
-      <View style={{ flex: 1, backgroundColor: "black" }}>
-        <Text style={{color: 'white', textAlign: 'center', padding:20}} >Currently no Hives here</Text>
-      </View>
-      <View style={{ flex: 2, backgroundColor:"#38343C"}} />
-    </View>
-  );
-  }
-
-
-
-
   return (
-    <View style={[styles.container, { flexDirection: "row" }]}>
-      <FlatList // The list of the Hives at the selected Location
-        style={{ flex: 1, backgroundColor: "black" }}
-        data={localHives}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.uuid}
-        ListEmptyComponent={<View/>}
-      />
-      <LocationDetail style={{ flex: 2 }} uuid={selectedId} />
+    <View
+      style={[{ flexDirection: "row", alignItems: "stretch", height: "100%" }]}
+    >
+      <View style={{ flex: 1 }}>
+        <FlatList // The list of the Hives at the selected Location
+          style={{ marginBottom: 30 }}
+          data={localHives}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.uuid}
+          ListEmptyComponent={
+            <Text style={{ alignSelf: "center" }}>Currently no Hives here</Text>
+          }
+          contentContainerStyle={defaultStyles.hiveList}
+          ItemSeparatorComponent={<DividerHorizontal />}
+          contentInset={{ top: 0, bottom: 20, left: 0, right: 0 }}
+          contentInsetAdjustmentBehavior="automatic"
+        />
+      </View>
+      <DividerVertical style={{ flex: 2 }} />
+      <LocationDetail style={{ flex: 3 }} uuid={selectedId} />
     </View>
   );
   //
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 0,
-  },
-  item: {
-    backgroundColor: "#38343C",
-    padding: 15,
-    marginVertical: 0.5,
-    marginHorizontal: 0,
-  },
-  title: {
-    color: "white",
-  },
-});

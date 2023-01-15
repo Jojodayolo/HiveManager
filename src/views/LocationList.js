@@ -4,12 +4,13 @@ import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
+import { defaultStyles } from "./Styles";
+import DeleteMenu from "../components/DeleteMenu";
 
 export const LocationList = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   var locations = useSelector((state) => state.locations);
-
 
   useEffect(() => {
     navigation.setOptions({
@@ -24,12 +25,13 @@ export const LocationList = () => {
   });
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, defaultStyles.container]}>
       <SuperGridSectionList
         itemDimension={100}
         data={locations}
         spacing={30}
         maxItemsPerRow={5}
+        flex={1}
         renderItem={({ item }) => <LocationTile location={item} />}
       />
     </View>
@@ -38,8 +40,9 @@ export const LocationList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    padding: 10,
+    flex: 1,
+    height: "100%",
+    margin: 10,
     borderColor: "white",
   },
 });

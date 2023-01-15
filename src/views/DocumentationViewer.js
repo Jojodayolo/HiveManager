@@ -1,20 +1,13 @@
 import React, { useEffect } from "react";
-import { DarkTheme } from "@react-navigation/native";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  Image,
-} from "react-native";
+import { Button, StyleSheet, Text, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-export const DocumentationViewer = ({route}) => {
-  const documentations = useSelector((state) => state.documentations.documentations);
+export const DocumentationViewer = ({ route }) => {
+  const documentations = useSelector(
+    (state) => state.documentations.documentations
+  );
   const uuid = route.params.uuid;
-  console.log(documentations);
   const currentDocument = documentations.filter((loc) => loc.uuid === uuid);
 
   const navigation = useNavigation();
@@ -22,105 +15,136 @@ export const DocumentationViewer = ({route}) => {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button
-          title="Bearbeiten"
-          onPress={() => navigation.navigate("")}
-        />
+        <Button title="Bearbeiten" onPress={() => navigation.navigate("")} />
       ),
-      //headerTitle: "",
     });
   });
 
   return (
-      <ScrollView style={styles.scrollView}>
-        {/*Standard Inputs*/}
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.scrollViewGroup}>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Volksstärke:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].population}</Text>
+          <Text style={styles.inputLabel}>Volksstärke</Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].population}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Honigwaben (<b>kg</b>):</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].honeycombs}</Text>
+          <Text style={styles.inputLabel}>
+            <Text style={styles.inputLabel}>Honigwaben</Text>
+            <Text style={styles.inputLabelBold}>(kg)</Text>
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].honeycombs}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Königin gesehen <b>K</b> / Stifte <b>S:</b></Text>
+          <Text style={styles.inputLabel}>
+            <Text style={styles.inputLabel}>Königin gesehen </Text>
+            <Text style={styles.inputLabelBold}> K / Sifte S</Text>
+          </Text>
           <Text style={styles.outputLabel}>{currentDocument[0].queen}</Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten):</Text>
+          <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten)</Text>
           <Text style={styles.outputLabel}>{currentDocument[0].frame}</Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Weiselzellen:</Text>
+          <Text style={styles.inputLabel}>Weiselzellen</Text>
           <Text style={styles.outputLabel}>{currentDocument[0].cells}</Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Gefüttert (<b>ml/kg</b>):</Text>
+          <Text style={styles.inputLabel}>
+            <Text style={styles.inputLabel}>Gefüttert </Text>
+            <Text style={styles.inputLabelBold}>(ml/kg)</Text>
+          </Text>
           <Text style={styles.outputLabel}>{currentDocument[0].fed}</Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Notizen:</Text>
+          <Text style={styles.inputLabel}>Notizen</Text>
           <Text style={styles.outputLabel}>{currentDocument[0].notes}</Text>
         </View>
+      </View>
 
-        {/*Standoff*/}
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
-            <View>
-            <Text style={{width: 190, textAlign: 'center', color: 'white'}}>Anwendung von Arzneimitteln</Text>
-            </View>
-          <View style={{flex: 1, height: 1, backgroundColor: 'white', marginLeft: '5%', marginRight: '5%'}} />
-        </View>
-
-        {/*Drug inputs*/}
+      <View style={styles.scrollViewGroup}>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge):</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.name}</Text>
+          <Text style={styles.inputLabel}>
+            Bezeichnung des Arzneimittls (+ Charge):
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.name}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Menge pro Bienenvolk (<b>ml</b>):</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.amount}</Text>
+          <Text style={styles.inputLabel}>
+            <Text style={styles.inputLabel}>Menge pro Bienenvolk </Text>
+            <Text style={styles.inputLabelBold}>(ml)</Text>
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.amount}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Name und Anschrift des Lieferanten:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.supplier}</Text>
+          <Text style={styles.inputLabel}>
+            Name und Anschrift des Lieferanten
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.supplier}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Belegnummer:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.receiptnumber}</Text>
+          <Text style={styles.inputLabel}>Belegnummer</Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.receiptnumber}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Standort der Bienenvölker (Flurnummer oder Bezeichnung):</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.colonyLocation}</Text>
+          <Text style={styles.inputLabel}>
+            Standort der Bienenvölker (Flurnummer oder Bezeichnung)
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.colonyLocation}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Nummern der Bienenvölker:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.colonyNumber}</Text>
+          <Text style={styles.inputLabel}>Nummern der Bienenvölker</Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.colonyNumber}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Ggf. Name und Anschrift des Tierarztes:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.vetInfo}</Text>
+          <Text style={styles.inputLabel}>
+            Ggf. Name und Anschrift des Tierarztes
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.vetInfo}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Wartezeit (Laut Packungsbeilage):</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.waitingPeriod}</Text>
+          <Text style={styles.inputLabel}>
+            Wartezeit (Laut Packungsbeilage)
+          </Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.waitingPeriod}
+          </Text>
         </View>
         <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Behandlungsdauer:</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].drugData.treatmentDuration}</Text>
+          <Text style={styles.inputLabel}>Behandlungsdauer</Text>
+          <Text style={styles.outputLabel}>
+            {currentDocument[0].drugData.treatmentDuration}
+          </Text>
         </View>
-      </ScrollView>
-    );
-} 
+      </View>
+    </ScrollView>
+  );
+};
 
 const styles = StyleSheet.create({
   inputLabel: {
-    textAlign: "right",
-    color: "white",
+    textAlign: "left",
     width: "25%",
-    padding: 10,
   },
-  outputLabel:{
+  outputLabel: {
     height: 40,
     margin: 12,
     borderWidth: 1,
@@ -137,7 +161,21 @@ const styles = StyleSheet.create({
     justifyContent: "left",
     alignItems: "center",
     width: "100%",
+    borderBottomWidth: 1,
+    borderColor: "rgb(142, 142, 147)",
+    padding: 15,
   },
-  scrollView: {
+  inputLabelBold: {
+    textAlign: "left",
+    width: "25%",
+    padding: 0,
+    fontWeight: "bold",
+  },
+  scrollView: {},
+  scrollViewGroup: {
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+    backgroundColor: "rgb(229, 229, 234)",
   },
 });
