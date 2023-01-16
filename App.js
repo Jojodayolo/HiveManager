@@ -14,7 +14,7 @@ import { Provider } from "react-redux";
 import Store from "./src/redux/store";
 import { defaultStyles } from "./src/views/Styles";
 import { MenuProvider } from "react-native-popup-menu";
-import { SafeAreaView } from "react-navigation";
+import { TitleScreen } from "./src/views/TitleScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +28,8 @@ export default function App({ navigation }) {
           style={defaultStyles.navigationHeader}
         >
           <MenuProvider>
-            <Stack.Navigator initialRouteName="LocationList">
+            <Stack.Navigator initialRouteName="TitleScreen">
+              <Stack.Screen name="TitleScreen" component={TitleScreen} />
               <Stack.Screen name="LocationShow" component={LocationShow} />
               <Stack.Screen name="LocationForm" component={LocationForm} />
               <Stack.Screen name="LocationCamera" component={LocationCamera} />

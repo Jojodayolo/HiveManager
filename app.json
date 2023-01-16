@@ -4,10 +4,10 @@
     "slug": "HiveManager",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/assets/imgs/icon.png",
+    "icon": "./src/assets/imgs/LogoSVG.svg",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/imgs/splash.png",
+      "image": "./src/assets/imgs/LogoSVG.svg",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

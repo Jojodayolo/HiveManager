@@ -5,6 +5,13 @@ import React, { useState, useEffect, useRef } from "react";
 import CameraButton from "../components/CameraButton";
 import { Button } from "react-native-web";
 
+/**
+ * TODO:
+ * - fix Design
+ * - camera always takesthe back camera when taking a picture
+ * - camera is visible on IOS but not in web, but when taking an image it shows the right one
+ *
+ */
 export const LocationCamera = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
@@ -49,26 +56,9 @@ export const LocationCamera = () => {
   return (
     <View stlye={stlyes.container}>
       {!image ? (
-        <Camera style={stlyes.camera} type={type} ref={cameraRef}>
-          <View
-            style={{
-              //flexDirection: "row",
-              justifyContent: "space-between",
-              padding: 30,
-            }}
-          >
-            <CameraButton
-              icon={"retweet"}
-              onPress={() => {
-                setType(
-                  type === CameraType.back ? CameraType.front : CameraType.back
-                );
-              }}
-            />
-          </View>
-        </Camera>
+        <Camera style={stlyes.camera} type={type} ref={cameraRef} />
       ) : (
-        <Image source={{ uri: Image }} style={stlyes.camera} />
+        <Image source={{ uri: image }} style={stlyes.camera} />
       )}
       <View>
         {image ? (
@@ -87,11 +77,21 @@ export const LocationCamera = () => {
             <CameraButton title={"Save"} icon="check" onPress={saveImage} />
           </View>
         ) : (
-          <CameraButton
-            title={"Take a picture"}
-            icon="camera"
-            onPress={takePicture}
-          />
+          <View flexDirection="row" justifyContent="center">
+            <CameraButton
+              icon={"retweet"}
+              onPress={() => {
+                setType(
+                  type === CameraType.back ? CameraType.front : CameraType.back
+                );
+              }}
+            />
+            <CameraButton
+              title={"Take a picture"}
+              icon="camera"
+              onPress={takePicture}
+            />
+          </View>
         )}
       </View>
     </View>
@@ -103,6 +103,7 @@ const stlyes = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "#fff",
     justifycontent: "center",
+    height: "100%",
   },
   camera: {
     borderRadius: 20,

@@ -20,6 +20,12 @@ export const LocationList = () => {
           onPress={() => navigation.navigate("LocationForm")}
         />
       ),
+      headerLeft: () => (
+        <Button
+          title="Ausloggen"
+          onPress={() => navigation.navigate("TitleScreen")}
+        />
+      ),
       headerTitle: "Übersicht",
     });
   });
