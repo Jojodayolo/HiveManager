@@ -7,7 +7,6 @@ import {
   View,
   TextInput,
   ScrollView,
-  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +16,10 @@ import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 
 export const LocationForm = () => {
-  const [locationName, onChangeLocationName] = React.useState('');
-  const [locationAddress, onChangeAddress] = React.useState('');
-  const [locationNotes, onChangeNotes] = React.useState('');
-  const [locationPhoto, onChangePhoto] = React.useState('');
+  const [locationName, onChangeLocationName] = React.useState("");
+  const [locationAddress, onChangeAddress] = React.useState("");
+  const [locationNotes, onChangeNotes] = React.useState("");
+  const [locationPhoto, onChangePhoto] = React.useState("");
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -48,35 +47,41 @@ export const LocationForm = () => {
 
   return (
     <ScrollView style={styles.scrollView}>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Name:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeLocationName}
-          value={locationName || ''}
-        />
-      </View>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Addresse:</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeAddress}
-          value={locationAddress || ''}
-        />
-      </View>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Notizen:</Text>
-        <TextInput
-          style={styles.bigInput}
-          multiline={true}
-          onChangeText={onChangeNotes}
-          value={locationNotes || ''}
-        />
-      </View>
-      <View style={styles.inputBox}>
-        <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
-        
-        <CameraButton title={'openCamera'} icon="camera" onPress={() => navigation.navigate("LocationCamera")} />
+      <View style={styles.scrollViewGroup}>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputLabel}>Name:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeLocationName}
+            value={locationName || ""}
+          />
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputLabel}>Addresse:</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeAddress}
+            value={locationAddress || ""}
+          />
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputLabel}>Notizen:</Text>
+          <TextInput
+            style={styles.bigInput}
+            multiline={true}
+            onChangeText={onChangeNotes}
+            value={locationNotes || ""}
+          />
+        </View>
+        <View style={styles.inputBox}>
+          <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
+
+          <CameraButton
+            title={"openCamera"}
+            icon="camera"
+            onPress={() => navigation.navigate("LocationCamera")}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -112,11 +117,16 @@ const styles = StyleSheet.create({
   },
   inputLabel: {
     textAlign: "right",
-    color: "white",
     width: "25%",
     padding: 10,
   },
   scrollView: {},
+  scrollViewGroup: {
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+    backgroundColor: "white",
+  },
 });
 /*() => navigation.navigate("LocationCamera")
 <CameraButton title={'openCamera'} icon="camera" />*/
