@@ -313,6 +313,6 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 20,
     borderRadius: 10,
-    backgroundColor: "rgb(229, 229, 234)",
+    backgroundColor: "white",
   },
 });

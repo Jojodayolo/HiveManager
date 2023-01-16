@@ -81,7 +81,7 @@ const hiveSlice = createSlice({
     hives: [
       {
         uuid: "4538b7d7-11f0-3e71-4ec9-9a0765c8ef6d",
-        name: "",
+        name: "Test Hive",
         docIDs: ["1"],
       },
     ],

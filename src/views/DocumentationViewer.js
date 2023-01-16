@@ -60,13 +60,44 @@ export const DocumentationViewer = ({ route }) => {
           </Text>
           <Text style={styles.outputLabel}>{currentDocument[0].fed}</Text>
         </View>
-        <View style={styles.inputBox}>
+        <View
+          style={[styles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+        >
           <Text style={styles.inputLabel}>Notizen</Text>
           <Text style={styles.outputLabel}>{currentDocument[0].notes}</Text>
         </View>
       </View>
 
       <View style={styles.scrollViewGroup}>
+        <View
+          style={{
+            flex: 1,
+            height: 1,
+            marginLeft: "5%",
+            marginRight: "5%",
+          }}
+        />
+        <View>
+          <Text
+            style={{
+              textAlign: "center",
+              alignSelf: "center",
+              fontWeight: "bold",
+              fontSize: 16,
+            }}
+          >
+            Anwendung von Arzneimitteln
+          </Text>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            height: 1,
+            //backgroundColor: "white",
+            marginLeft: "5%",
+            marginRight: "5%",
+          }}
+        />
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>
             Bezeichnung des Arzneimittls (+ Charge):
@@ -128,7 +159,9 @@ export const DocumentationViewer = ({ route }) => {
             {currentDocument[0].drugData.waitingPeriod}
           </Text>
         </View>
-        <View style={styles.inputBox}>
+        <View
+          style={[styles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+        >
           <Text style={styles.inputLabel}>Behandlungsdauer</Text>
           <Text style={styles.outputLabel}>
             {currentDocument[0].drugData.treatmentDuration}
@@ -176,6 +209,6 @@ const styles = StyleSheet.create({
     padding: 20,
     margin: 20,
     borderRadius: 10,
-    backgroundColor: "rgb(229, 229, 234)",
+    backgroundColor: "white",
   },
 });

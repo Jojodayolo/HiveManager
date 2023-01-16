@@ -24,7 +24,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     onPress={onPress}
   >
     <View flex={1} style={{ width: "80%" }}>
-      <Text>{item.name || ""}</Text>
+      <Text style={{ paddingLeft: 15 }}>{item.name || ""}</Text>
     </View>
     <View flex={2} style={{}}>
       <DeleteMenu />
