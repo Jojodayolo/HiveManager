@@ -1,7 +1,6 @@
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
-import { SvgUri } from "react-native-svg";
-import Logo from "../assets/imgs/LogoSVG.svg";
+
 export const TitleScreen = ({ navigation }) => {
   return (
     <View
@@ -14,7 +13,10 @@ export const TitleScreen = ({ navigation }) => {
         },
       ]}
     >
-      <Logo />
+      <Image
+        style={styles.img}
+        source={require("../assets/imgs/LogoPNG.png")}
+      />
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>E-Mail</Text>
         <TextInput style={styles.input} />
