@@ -5,7 +5,7 @@ import { Entypo } from "@expo/vector-icons";
 export default function CameraButton({ title, onPress, icon, color }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>
-      <Entypo name={icon} size={color ? color : "#f1f1f1"} />
+      <Entypo name={icon} size={color ? color : "black"} />
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
   text: {
     fontWeight: "bold",
     fontSize: 16,
-    color: "#f1f1f1",
     marginLeft: 10,
   },
 });
