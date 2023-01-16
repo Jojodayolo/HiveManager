@@ -13,8 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import DeleteMenu from "../components/DeleteMenu";
 import {
-  DividerHorizontal,
   DividerVertical,
+  DividerHorizontal,
 } from "../components/designComonents";
 
 //The List Item to be rendered
@@ -88,7 +88,7 @@ export const LocationShow = ({ route }) => {
             <Text style={{ alignSelf: "center" }}>Currently no Hives here</Text>
           }
           contentContainerStyle={defaultStyles.hiveList}
-          ItemSeparatorComponent={<DividerHorizontal />}
+          ItemSeparatorComponent={() => <DividerHorizontal />}
           contentInset={{ top: 0, bottom: 20, left: 0, right: 0 }}
           contentInsetAdjustmentBehavior="automatic"
         />
@@ -97,5 +97,4 @@ export const LocationShow = ({ route }) => {
       <LocationDetail style={{ flex: 3 }} uuid={selectedId} />
     </View>
   );
-  //
 };

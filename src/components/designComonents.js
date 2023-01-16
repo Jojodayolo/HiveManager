@@ -1,3 +1,4 @@
+import React from "react";
 import { View, StyleSheet } from "react-native";
 
 export const DividerVertical = () => <View style={styles.dividerVertical} />;
@@ -7,11 +8,11 @@ export const DividerHorizontal = () => (
 
 const styles = StyleSheet.create({
   dividerVertical: {
-    width: StyleSheet.hairlineWidth,
+    width: 0.3,
     backgroundColor: "rgb(142, 142, 147)",
   },
   dividerHorizontal: {
-    height: StyleSheet.hairlineWidth,
+    height: 0.3,
     backgroundColor: "rgb(209, 209, 214)",
   },
 });

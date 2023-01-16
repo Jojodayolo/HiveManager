@@ -105,7 +105,7 @@ export const LocationDetail = (props) => {
         renderItem={renderItem}
         keyExtractor={(item) => item.uuid}
         contentContainerStyle={defaultStyles.docDetailListContentContainerStyle}
-        ItemSeparatorComponent={<DividerHorizontal width={"80%"} />}
+        ItemSeparatorComponent={() => <DividerHorizontal width={"80%"} />}
       />
     </View>
   );
