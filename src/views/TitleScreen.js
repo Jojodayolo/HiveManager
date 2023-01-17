@@ -1,7 +1,13 @@
+import React from "react";
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
+import { auth, SignIn, SignUp, getLocations } from "../../firebaseConfig";
+import { useNavigation } from "@react-navigation/native";
 
-export const TitleScreen = ({ navigation }) => {
+export const TitleScreen = () => {
+  const [eMail, onEMail] = React.useState("max@mustermann.com");
+  const [password, onPassword] = React.useState("admin123");
+  const navigation = useNavigation();
   return (
     <View
       style={[
@@ -19,16 +25,33 @@ export const TitleScreen = ({ navigation }) => {
       />
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>E-Mail</Text>
-        <TextInput style={styles.input} />
+        <TextInput
+          style={styles.input}
+          onChangeText={onEMail}
+          value={eMail || ""}
+        />
       </View>
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Password</Text>
-        <TextInput style={[styles.input]} />
+        <TextInput
+          style={[styles.input]}
+          onChangeText={onPassword}
+          value={password || ""}
+        />
       </View>
-      <Button
-        title="Login"
-        onPress={() => navigation.navigate("LocationList")}
-      />
+      <View>
+        <Button
+          title="Login"
+          onPress={() => {
+            var uid = SignIn(eMail, password);
+            navigation.navigate("LocationList", { uid });
+          }}
+        />
+        <Button
+          title="Create Account"
+          onPress={() => navigation.navigate("CreateUserScreen")}
+        />
+      </View>
     </View>
   );
 };

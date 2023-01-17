@@ -10,28 +10,33 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { createLocation, getFirst } from "../redux/actions";
+//import { createLocation, getFirst } from "../redux/actions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
+import { createLocation } from "../../firebaseConfig";
 
-export const LocationForm = () => {
+export const LocationForm = ({ route }) => {
   const [locationName, onChangeLocationName] = React.useState("");
   const [locationAddress, onChangeAddress] = React.useState("");
   const [locationNotes, onChangeNotes] = React.useState("");
   const [locationPhoto, onChangePhoto] = React.useState("");
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const onDone = () => {
-    dispatch(
+    /*dispatch(
       createLocation({
         name: locationName,
         address: locationAddress,
         notes: locationNotes,
       })
-    );
+    );*/
+    createLocation({
+      name: locationName,
+      address: locationAddress,
+      notes: locationNotes,
+    });
     navigation.goBack();
   };
 

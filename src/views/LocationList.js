@@ -3,21 +3,18 @@ import React, { useEffect } from "react";
 import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import DeleteMenu from "../components/DeleteMenu";
 
-export const LocationList = () => {
+export const LocationList = ({ route }) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  var locations = useSelector((state) => state.locations);
-
+  const uid = route.params.uid;
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button
           title="Hinzufügen"
-          onPress={() => navigation.navigate("LocationForm")}
+          onPress={() => navigation.navigate("LocationForm", { uid })}
         />
       ),
       headerLeft: () => (
@@ -31,7 +28,8 @@ export const LocationList = () => {
   });
 
   return (
-    <View style={[styles.container, defaultStyles.container]}>
+    <View />
+    /*<View style={[styles.container, defaultStyles.container]}>
       <SuperGridSectionList
         itemDimension={100}
         data={locations}
@@ -40,7 +38,7 @@ export const LocationList = () => {
         flex={1}
         renderItem={({ item }) => <LocationTile location={item} />}
       />
-    </View>
+    </View>*/
   );
 };
 
