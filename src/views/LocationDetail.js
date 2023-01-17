@@ -1,12 +1,17 @@
+/**
+ * LocationDetails.js
+ * 
+ * Part of LocationShow relevant for displaying the content of the selected hive.
+ */
 import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import { DividerHorizontal } from "../components/designComonents";
 
-// needs a style rework text is alwys black
+//The Item to be rendered.
 const Item = ({ item, onPress }) => (
   <TouchableOpacity style={[defaultStyles.documentationItem]} onPress={onPress}>
     <Text style={styles.name}>
@@ -24,10 +29,12 @@ const Item = ({ item, onPress }) => (
   </TouchableOpacity>
 );
 
+
 export const LocationDetail = (props) => {
   const navigation = useNavigation();
   const [selectedId, setSelectedId] = useState(null);
-  //Item that gets Highlighted when selected
+  
+  //Item that gets Highlighted when selected.
   const renderItem = ({ item }) => {
     const onDocSelected = () => {
       setSelectedId(item.uuid);
@@ -36,12 +43,12 @@ export const LocationDetail = (props) => {
     return <Item item={item} onPress={onDocSelected} />;
   };
 
-  //Get the selected Hive
+  //Fetch the selected Hive.
   const selectedHive = useSelector((state) =>
     state.hives.hives.filter((hive) => hive.uuid === props.uuid)
   );
 
-  //Filter the documentations for the ones that belong to the hive
+  //Filter the documentations for the ones that belong to the hive.
   const documentations = useSelector((state) => state.documentations);
   var localDocs;
   try {
@@ -52,7 +59,7 @@ export const LocationDetail = (props) => {
     localDocs = [];
   }
 
-  //dont display a list if there are no docs or display nothing if no hive is selected(second should only happen if a location has no hives)
+  //dont display a list if there are no docs or display nothing if no hive is selected(second should only happen if a location has no hives).
   if (props.uuid === null || selectedHive.length === 0) {
     return <View style={defaultStyles.docDetailList} />;
   } else if (localDocs.length === 0) {
@@ -83,7 +90,7 @@ export const LocationDetail = (props) => {
     );
   }
 
-  //Full render if data is available
+  //Full render if data is available.
   return (
     <View style={styles.container}>
       <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
@@ -96,7 +103,8 @@ export const LocationDetail = (props) => {
           })
         }
       />
-      <FlatList // The list of the Documentation for the selected hive
+      <FlatList 
+        //The list of documentation for the selected hive.
         style={defaultStyles.docDetailListStyle}
         data={localDocs}
         renderItem={renderItem}
@@ -111,23 +119,19 @@ export const LocationDetail = (props) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    //borderColor: "white",
     width: "70%",
   },
   hiveTitle: {
-    //color: "white",
     textAlign: "center",
     fontSize: 20,
     margin: 20,
   },
   item: {
-    //backgroundColor: "#38343C",
     padding: 15,
     marginVertical: 0.5,
     marginHorizontal: 0,
   },
   title: {
-    //color: "white",
   },
   docButton: {
     margin: 20,

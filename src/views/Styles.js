@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-/*
+/**
  * Default style elements.
  */
 const defaultStyles = StyleSheet.create({
@@ -46,7 +46,7 @@ const defaultStyles = StyleSheet.create({
   },
 });
 
-/*
+/**
  * Style elements for the different form views. 
  */
 const formStyles = StyleSheet.create({

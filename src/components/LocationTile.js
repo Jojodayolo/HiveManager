@@ -1,10 +1,17 @@
+/**
+ * LocationTile.js
+ * 
+ * Component used to display a Location in form of a small tile in a roster in LocationList.
+ */
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeLocation } from "../redux/actions";
 import DeleteMenu from "../components/DeleteMenu";
 import { defaultStyles } from "../views/Styles";
+
+
 export const LocationTile = (props) => {
   const navigation = useNavigation();
   let location = props.location;

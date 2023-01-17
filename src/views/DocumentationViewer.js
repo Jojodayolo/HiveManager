@@ -1,8 +1,14 @@
+/**
+ * DocumentationViewer.js
+ * 
+ * The View relevant for inspecting an existing document.
+ */
 import React, { useEffect } from "react";
 import { Button, Text, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { formStyles } from "../views/Styles";
+
 
 export const DocumentationViewer = ({ route }) => {
   //fetch current document
@@ -14,6 +20,10 @@ export const DocumentationViewer = ({ route }) => {
 
   const navigation = useNavigation();
 
+  /**
+   * useEffect()
+   * Function used to add and edit Buttons to the header.
+   */
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -78,7 +88,7 @@ export const DocumentationViewer = ({ route }) => {
         </View>
         
         <View style={formStyles.inputBox}>
-          <Text style={formStyles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge):</Text>
+          <Text style={formStyles.inputLabel}>Bezeichnung des Arzneimittls (+ Charge)</Text>
           <Text style={formStyles.outputLabel}>{currentDocument[0].drugData.name}</Text>
         </View>
 
@@ -121,12 +131,9 @@ export const DocumentationViewer = ({ route }) => {
           style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
         >
           <Text style={formStyles.inputLabel}>Behandlungsdauer</Text>
-          <Text style={formStyles.outputLabel}>
-            {currentDocument[0].drugData.treatmentDuration}
-          </Text>
+          <Text style={formStyles.outputLabel}>{currentDocument[0].drugData.treatmentDuration}</Text>
         </View>
       </View>
     </ScrollView>
   );
 };
-

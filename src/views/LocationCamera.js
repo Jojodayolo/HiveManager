@@ -1,8 +1,14 @@
+/**
+ * LocationCamera.js
+ * 
+ * View that includes the Camera used when adding a picture to a new location.
+ */
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import React, { useState, useEffect, useRef } from "react";
 import CameraButton from "../components/CameraButton";
+
 
 /**
  * TODO:
@@ -18,7 +24,10 @@ export const LocationCamera = () => {
   const [type, setType] = useState(CameraType.back);
   const cameraRef = useRef(null);
 
-  //Requesting permissions to use the camera
+  /**
+   * useEffect()
+   * Function used to request permissions for the devices camera and media library.
+   */
   useEffect(() => {
     (async () => {
       MediaLibrary.requestPermissionsAsync();
@@ -27,7 +36,7 @@ export const LocationCamera = () => {
     })();
   }, []);
 
-  /*
+  /** 
    * takePicture()
    * Takes picture and saves it in the image variable.
    */
@@ -43,7 +52,7 @@ export const LocationCamera = () => {
     }
   };
 
-  /*
+  /** 
    * savePicture()
    * Saves Picture from image variable to the devices MediaLibrary and empties variable.
    */
@@ -60,7 +69,7 @@ export const LocationCamera = () => {
   };
 
   if (hasCameraPermission === false) {
-    return <Text>No access</Text>;
+    return <Text>Kein Kamerazugriff!</Text>;
   }
 
   //Camera structure with icon-buttons to (re-)take pictures and swap the camera. 
@@ -69,9 +78,7 @@ export const LocationCamera = () => {
       {!image ? (
         //Shows camera when there is no current picture.
         <Camera style={stlyes.camera} type={type} ref={cameraRef} />
-      ) 
-      : 
-      (
+      ) : (
         //Shows the picture if one was taken
         <Image source={{ uri: image }} style={stlyes.camera} />
       )}
@@ -125,6 +132,5 @@ const stlyes = StyleSheet.create({
   camera: {
     borderRadius: 20,
     height: 100,
-    flex: 1,
   },
 });

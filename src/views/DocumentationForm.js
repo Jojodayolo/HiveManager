@@ -1,3 +1,8 @@
+/**
+ * DocumentationForms.js
+ * 
+ * The View relevant for creating a document for a hive.
+ */
 import React, { useEffect } from "react";
 import {
   Button,
@@ -9,8 +14,9 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { addDoc, createDoc } from "../redux/actions";
-import Store from "../redux/store";
 import { formStyles } from "../views/Styles";
+import Store from "../redux/store";
+
 
 export const DocumentationForm = ({ route }) => {
   const uuid = route.params.uuid;
@@ -38,9 +44,9 @@ export const DocumentationForm = ({ route }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  /*
-   * onDone() 
-   * Creates a new document with the entered values for the current hive .
+  /**
+   * onDone()
+   * Creates a new document with the entered values for the current hive.
    */
   const onDone = () => {
     dispatch(
@@ -74,6 +80,10 @@ export const DocumentationForm = ({ route }) => {
     navigation.goBack();
   };
 
+  /**
+   * useEffect()
+   * Function used to add buttons to the header and set the header title.
+   */
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <Button title="Fertig" onPress={onDone} />,

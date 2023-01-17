@@ -1,5 +1,6 @@
-import { Appearance } from "react-native";
-import { DarkTheme } from "@react-navigation/native";
+/**
+ * App.js
+ */
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PersistGate } from "redux-persist/integration/react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -24,7 +25,6 @@ export default function App({ navigation }) {
     <Provider store={Store.store}>
       <PersistGate loading={null} persistor={Store.persistor}>
         <NavigationContainer
-          //theme={DarkTheme}
           style={defaultStyles.navigationHeader}
         >
           <MenuProvider>
@@ -50,15 +50,3 @@ export default function App({ navigation }) {
     </Provider>
   );
 }
-
-// TODO find a File for that
-/*const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  TitleBar: {},
-});*/
-
-/*
- */

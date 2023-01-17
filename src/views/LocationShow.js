@@ -1,6 +1,10 @@
+/**
+ * LocationShow.js
+ * 
+ * View relevant for displaying a Locations content.
+ */
 import React, { useState, useEffect } from "react";
 import {
-  StyleSheet,
   FlatList,
   Text,
   View,
@@ -9,7 +13,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LocationDetail } from "./LocationDetail";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import DeleteMenu from "../components/DeleteMenu";
 import {
@@ -32,11 +36,33 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
+
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
   var locations = useSelector((state) => state.locations);
   var hives = useSelector((state) => state.hives.hives);
   const [selectedId, setSelectedId] = useState();
+  
+  /**
+   * useEffect()
+   * Function used to add buttons to the header and set the header title to the name of the current location.
+   */
+  useEffect(() => {
+    navigation.setOptions({
+      title: location[0].name,
+      headerRight: () => (
+        <Button
+          title="Hinzufügen"
+          onPress={() => navigation.navigate("HiveForm", { uuid: uuid })}
+        />
+      ),
+    });
+  });
+
+  /**
+   * renderItem()
+   * Function responsible for displaying an Item in the List of Hives.
+   */
   const renderItem = ({ item }) => {
     const backgroundColor = item.uuid === selectedId ? "#157EFB" : "white";
     const color = item.uuid === selectedId ? "white" : "black";
@@ -50,7 +76,6 @@ export const LocationShow = ({ route }) => {
     );
   };
 
-  //Set the title to the Location Name
   const uuid = route.params.uuid;
 
   //Get all locations and filter the Selected one
@@ -60,19 +85,6 @@ export const LocationShow = ({ route }) => {
   const localHives = hives.filter((hive) =>
     location[0].hiveIDs.includes(hive.uuid)
   );
-
-  //Setting the Navigation Title and Buttons
-  useEffect(() => {
-    navigation.setOptions({
-      title: location[0].name,
-      headerRight: () => (
-        <Button
-          title="Hinzufügen"
-          onPress={() => navigation.navigate("HiveForm", { uuid: uuid })}
-        />
-      ),
-    });
-  });
 
   return (
     <View

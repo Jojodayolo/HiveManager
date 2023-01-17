@@ -1,8 +1,18 @@
+/**
+ * TitleScreen.js
+ * 
+ * Represents the initial Title/Login Screen of the App.
+ */
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
 import React, { useEffect } from "react";
 
+
 export const TitleScreen = ({ navigation }) => {
+  /**
+   * useEffect()
+   * Function used to set the header title.
+   */
   useEffect(() => {
     navigation.setOptions({
       headerTitle: "Hive Manager",

@@ -1,3 +1,8 @@
+/**
+ * LocationForm.js
+ * 
+ * View relevant for creating a new Location.
+ */
 import React, { useEffect } from "react";
 import {
   Button,
@@ -12,6 +17,7 @@ import { createLocation, getFirst } from "../redux/actions";
 import CameraButton from "../components/CameraButton";
 import { formStyles } from "../views/Styles";
 
+
 export const LocationForm = () => {
 
   //Various Variables of a location
@@ -23,7 +29,21 @@ export const LocationForm = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  /*
+  /**
+   * useEffect()
+   * Function used to add buttons to the header and set the header title.
+   */
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button title="Fertig" onPress={onDone} />,
+      headerLeft: () => (
+        <Button title="Abbrechen" onPress={navigation.goBack} />
+      ),
+      headerTitle: "Standort hinzufügen",
+    });
+  });
+
+  /**
    * onDone() 
    * Creates a new location with the entered values.
    */
@@ -37,16 +57,6 @@ export const LocationForm = () => {
     );
     navigation.goBack();
   };
-
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Button title="Fertig" onPress={onDone} />,
-      headerLeft: () => (
-        <Button title="Abbrechen" onPress={navigation.goBack} />
-      ),
-      headerTitle: "Standort hinzufügen",
-    });
-  });
 
   return (
     <ScrollView style={formStyles.scrollView}>
@@ -91,6 +101,3 @@ export const LocationForm = () => {
     </ScrollView>
   );
 };
-
-/*() => navigation.navigate("LocationCamera")
-<CameraButton title={'openCamera'} icon="camera" />*/

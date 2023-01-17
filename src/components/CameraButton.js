@@ -1,8 +1,13 @@
+/**
+ * CameraButton.js
+ * 
+ * Button Component that includes a title and Icon from the expo icon library.
+ */
 import * as React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-//Button that includes a title and icon from the expo icon galery
+
 export default function CameraButton({ title, onPress, icon, color }) {
   return (
     <TouchableOpacity onPress={onPress} style={styles.button}>

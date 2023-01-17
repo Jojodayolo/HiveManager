@@ -1,15 +1,19 @@
-import { StyleSheet, Text, View } from "react-native";
+/**
+ * DeleteMenu.js
+ * 
+ * Component used to show a small menu for deleting/editing hives/locations on a hamburger icon.  
+ */
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import {
   Menu,
-  MenuProvider,
   MenuOptions,
   MenuOption,
   MenuTrigger,
 } from "react-native-popup-menu";
 import { Entypo } from "@expo/vector-icons";
-import { removeLocation } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
+
 
 const Divider = () => <View style={styles.divider} />;
 
