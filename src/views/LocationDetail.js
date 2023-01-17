@@ -4,10 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
-import {
-  DividerHorizontal,
-  DividerVertical,
-} from "../components/designComonents";
+import { DividerHorizontal } from "../components/designComonents";
 
 // needs a style rework text is alwys black
 const Item = ({ item, onPress }) => (

@@ -5,7 +5,6 @@ import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
-import DeleteMenu from "../components/DeleteMenu";
 
 export const LocationList = () => {
   const navigation = useNavigation();

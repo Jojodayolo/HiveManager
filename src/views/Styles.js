@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
-
+/*
+ * Default style elements.
+ */
 const defaultStyles = StyleSheet.create({
   container: {
     //backgroundColor: colors.colordarkgray5,
@@ -43,4 +45,74 @@ const defaultStyles = StyleSheet.create({
     //padding: 10,
   },
 });
+
+/*
+ * Style elements for the different form views. 
+ */
+const formStyles = StyleSheet.create({
+  scrollView: {
+
+  },
+  scrollViewGroup: {
+    padding: 20,
+    margin: 20,
+    borderRadius: 10,
+    backgroundColor: "white",
+  },
+  inputBox: {
+    flexDirection: "row",
+    alignSelf: "left",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    padding: 5,
+    //bottom border
+    borderBottomWidth: 1,
+    borderColor: "rgb(142, 142, 147)",
+    padding: 15,
+  },
+  inputLabel: {
+    textAlign: "right",
+    color: "black",
+    width: "30%",
+    padding: 10,
+  },
+  outputLabel: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+    width: "65%",
+    marginRight: "10%",
+    backgroundColor: "white",
+    color: "black",
+  },
+  input: {
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: "white",
+    width: "65%",
+    marginRight: "10%",
+  },
+  bigInput: {
+    height: 100,
+    margin: 12,
+    borderWidth: 1,
+    borderRadius: 4,
+    padding: 10,
+    backgroundColor: "white",
+    width: "65%",
+    marginRight: "10%",
+  },
+  boldInputLabel: {
+    textAlign: "right",
+    padding: 0,
+    fontWeight: "bold",
+  }
+});
 export { defaultStyles };
+export { formStyles };

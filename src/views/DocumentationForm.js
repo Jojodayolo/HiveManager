@@ -1,21 +1,22 @@
 import React, { useEffect } from "react";
 import {
   Button,
-  StyleSheet,
   Text,
   View,
   TextInput,
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import DropdownComponent from "../components/Dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { addDoc, createDoc } from "../redux/actions";
 import Store from "../redux/store";
+import { formStyles } from "../views/Styles";
 
 export const DocumentationForm = ({ route }) => {
   const uuid = route.params.uuid;
   console.log(route);
+
+  //Various Variables of a documentation
   const [population, onChangePopulation] = React.useState("");
   const [honeycombs, onChangeHoneycombs] = React.useState("");
   const [queen, onChangeQueen] = React.useState("");
@@ -23,7 +24,7 @@ export const DocumentationForm = ({ route }) => {
   const [cells, onChangeCells] = React.useState("");
   const [fed, onChangeFed] = React.useState("");
   const [notes, onChangeNotes] = React.useState("");
-
+  
   const [drugName, onChangeDrugName] = React.useState("");
   const [drugAmount, onChangeDrugAmount] = React.useState("");
   const [drugSupplier, onChangeDrugSupplier] = React.useState("");
@@ -32,12 +33,15 @@ export const DocumentationForm = ({ route }) => {
   const [drugColonyNumber, onChangeDrugColonyNumber] = React.useState("");
   const [drugVetInfo, onChangeDrugVetInfo] = React.useState("");
   const [drugWaitingperiod, onChangeDrugWaitingperiod] = React.useState("");
-  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] =
-    React.useState("");
+  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] = React.useState("");
 
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  /*
+   * onDone() 
+   * Creates a new document with the entered values for the current hive .
+   */
   const onDone = () => {
     dispatch(
       createDoc({
@@ -80,64 +84,72 @@ export const DocumentationForm = ({ route }) => {
     });
   });
 
+
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.scrollViewGroup}>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Volksstärke</Text>
-          <DropdownComponent />
-        </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
-            <Text style={styles.inputLabel}>Honigwaben </Text>
-            <Text style={styles.inputLabelBold}>(kg)</Text>
-          </Text>
+    <ScrollView style={formStyles.scrollView}>
+      <View style={formStyles.scrollViewGroup}>
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Volksstärke (1-4)</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
+            maxLength={1}
+            onChangeText={onChangePopulation}
+            value={population || ""}
+          />
+        </View>
+
+        <View style={formStyles.inputBox}>
+            <Text style={formStyles.inputLabel}>Honigwaben (kg)</Text>
+          <TextInput
+            style={formStyles.input}
             onChangeText={onChangeHoneycombs}
             value={honeycombs || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
-            <Text style={styles.inputLabel}>Königin gesehen </Text>
-            <Text style={styles.inputLabelBold}> K / Sifte S</Text>
-          </Text>
-          <DropdownComponent />
+
+        <View style={formStyles.inputBox}>
+            <Text style={formStyles.inputLabel}>Königin gesehen K / Stifte S</Text>
+            <TextInput
+            style={formStyles.input}
+            maxLength={1}
+            onChangeText={onChangeQueen}
+            value={queen || ""}
+          />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten)</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Baurahmen +/- (geschnitten)</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeFrame}
             value={frame || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Weiselzellen</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Weiselzellen</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeCells}
             value={cells || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
-            <Text style={styles.inputLabel}>Gefüttert </Text>
-            <Text style={styles.inputLabelBold}>(ml/kg)</Text>
-          </Text>
+
+        <View style={formStyles.inputBox}>
+            <Text style={formStyles.inputLabel}>Gefüttert (ml/kg)</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeFed}
             value={fed || ""}
           />
         </View>
+
         <View
-          style={[styles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+          style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
         >
-          <Text style={styles.inputLabel}>Notizen</Text>
+          <Text style={formStyles.inputLabel}>Notizen</Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeNotes}
             value={notes || ""}
@@ -145,15 +157,7 @@ export const DocumentationForm = ({ route }) => {
         </View>
       </View>
 
-      <View style={styles.scrollViewGroup}>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            marginLeft: "5%",
-            marginRight: "5%",
-          }}
-        />
+      <View style={formStyles.scrollViewGroup}>
         <View>
           <Text
             style={{
@@ -166,102 +170,99 @@ export const DocumentationForm = ({ route }) => {
             Anwendung von Arzneimitteln
           </Text>
         </View>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            //backgroundColor: "white",
-            marginLeft: "5%",
-            marginRight: "5%",
-          }}
-        />
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>
             Bezeichnung des Arzneimittls (+ Charge)
           </Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeDrugName}
             value={drugName || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
-            <Text style={styles.inputLabel}>Menge pro Bienenvolk </Text>
-            <Text style={styles.inputLabelBold}>(ml)</Text>
-          </Text>
+
+        <View style={formStyles.inputBox}>
+            <Text style={formStyles.inputLabel}>Menge pro Bienenvolk (ml)</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeDrugAmount}
             value={drugAmount || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>
             Name und Anschrift des Lieferanten
           </Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeDrugSupplier}
             value={drugSupplier || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Belegnummer</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Belegnummer</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeDrugReceiptnumber}
             value={drugReceiptnumber || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>
             Standort der Bienenvölker (Flurnummer oder Bezeichnung)
           </Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeDrugColonyLocation}
             value={drugColonyLocation || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Nummern der Bienenvölker</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Nummern der Bienenvölker</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeDrugColonyNumber}
             value={drugColonyNumber || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>
             Ggf. Name und Anschrift des Tierarztes:
           </Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeDrugVetInfo}
             value={drugVetInfo || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>
             Wartezeit (Laut Packungsbeilage)
           </Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeDrugWaitingperiod}
             value={drugWaitingperiod || ""}
           />
         </View>
+
         <View
-          style={[styles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+          style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
         >
-          <Text style={styles.inputLabel}>Behandlungsdauer</Text>
+          <Text style={formStyles.inputLabel}>Behandlungsdauer</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeDrugTreatmentDuration}
             value={drugTreatmentDuration || ""}
           />
@@ -270,49 +271,3 @@ export const DocumentationForm = ({ route }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 0,
-    width: "65%",
-    marginRight: "10%",
-  },
-  bigInput: {
-    height: 100,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 0,
-    width: "65%",
-    marginRight: "10%",
-  },
-  inputBox: {
-    flexDirection: "row",
-    alignSelf: "left",
-    justifyContent: "left",
-    alignItems: "center",
-    width: "100%",
-    borderBottomWidth: 1,
-    borderColor: "rgb(142, 142, 147)",
-    padding: 15,
-  },
-  inputLabel: {
-    textAlign: "left",
-    width: "25%",
-  },
-  inputLabelBold: {
-    textAlign: "right",
-    width: "25%",
-    padding: 0,
-    fontWeight: "bold",
-  },
-  scrollView: {},
-  scrollViewGroup: {
-    padding: 20,
-    margin: 20,
-    borderRadius: 10,
-    backgroundColor: "white",
-  },
-});

@@ -1,7 +1,14 @@
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
+import React, { useEffect } from "react";
 
 export const TitleScreen = ({ navigation }) => {
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: "Hive Manager",
+    });
+  });
+  
   return (
     <View
       style={[
@@ -17,14 +24,17 @@ export const TitleScreen = ({ navigation }) => {
         style={styles.img}
         source={require("../assets/imgs/LogoPNG.png")}
       />
+
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>E-Mail</Text>
         <TextInput style={styles.input} />
       </View>
+
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Password</Text>
         <TextInput style={[styles.input]} />
       </View>
+      
       <Button
         title="Login"
         onPress={() => navigation.navigate("LocationList")}
@@ -34,14 +44,9 @@ export const TitleScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 40,
-    textAlign: "center",
-    color: "white",
-  },
   img: {
-    width: 200,
-    height: 200,
+    height: 300,
+    width: 300,   
   },
   input: {
     height: 40,
