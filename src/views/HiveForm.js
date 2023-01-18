@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -11,7 +10,10 @@ import { useNavigation } from "@react-navigation/native";
 import { createHive } from "../../firebaseConfig";
 
 export const HiveForm = ({ route }) => {
+
+  //Variable of a Hive
   const [hiveName, onChangeText] = React.useState();
+
   const navigation = useNavigation();
   const locID = route.params.locID;
 
@@ -25,10 +27,11 @@ export const HiveForm = ({ route }) => {
     });
   });
 
+  /*
+   * onDone() 
+   * Creates a new hive with the entered values for the current location. 
+   */
   const onDone = () => {
-    /*dispatch(createHive({ name: hiveName }));
-    const state = Store.store.getState();
-    dispatch(addHive({ locUuid: uuid, hiveUuid: state.hives.newestHiveID }));*/
     console.log(locID);
     createHive(locID, {
       name: hiveName,
@@ -38,45 +41,17 @@ export const HiveForm = ({ route }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.scrollViewGroup}>
-        <Text style={styles.inputLabel}>Name</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeText}
-          value={hiveName || ""}
-        />
+    <ScrollView style={formStyles.scrollView}>
+      <View style={formStyles.scrollViewGroup}>
+        <View style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}>
+          <Text style={formStyles.inputLabel}>Name</Text>
+          <TextInput
+            style={formStyles.input}
+            onChangeText={onChangeText}
+            value={hiveName || ""}
+          />
+        </View>
       </View>
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    backgroundColor: "white",
-    width: "75%",
-    marginRight: "10%",
-  },
-  inputLabel: {
-    textAlign: "center",
-    width: "25%",
-    padding: 10,
-  },
-  scrollViewGroup: {
-    flexDirection: "row",
-
-    padding: 20,
-    margin: 20,
-    borderRadius: 10,
-    backgroundColor: "white",
-    alignSelf: "left",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-});

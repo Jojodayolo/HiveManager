@@ -3,10 +3,7 @@ import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { defaultStyles } from "./Styles";
-import {
-  DividerHorizontal,
-  DividerVertical,
-} from "../components/designComonents";
+import { DividerHorizontal } from "../components/designComonents";
 import { getDocumentations } from "../../firebaseConfig";
 
 // needs a style rework text is alwys black

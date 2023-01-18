@@ -23,6 +23,7 @@ export const TitleScreen = () => {
         style={styles.img}
         source={require("../assets/imgs/LogoPNG.png")}
       />
+
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>E-Mail</Text>
         <TextInput
@@ -31,6 +32,7 @@ export const TitleScreen = () => {
           value={eMail || ""}
         />
       </View>
+
       <View style={styles.inputBox}>
         <Text style={styles.inputLabel}>Password</Text>
         <TextInput
@@ -57,14 +59,9 @@ export const TitleScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 40,
-    textAlign: "center",
-    color: "white",
-  },
   img: {
-    width: 200,
-    height: 200,
+    height: 300,
+    width: 300,   
   },
   input: {
     height: 40,

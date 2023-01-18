@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
-import { DarkTheme } from "@react-navigation/native";
 import {
   Button,
-  StyleSheet,
   Text,
   View,
   TextInput,
@@ -10,13 +8,14 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-//import { createLocation, getFirst } from "../redux/actions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 import { createLocation } from "../../firebaseConfig";
 
 export const LocationForm = () => {
+
+  //Various Variables of a location
   const [locationName, onChangeLocationName] = React.useState("");
   const [locationAddress, onChangeAddress] = React.useState("");
   const [locationNotes, onChangeNotes] = React.useState("");
@@ -24,6 +23,10 @@ export const LocationForm = () => {
 
   const navigation = useNavigation();
 
+  /*
+   * onDone() 
+   * Creates a new location with the entered values.
+   */
   const onDone = () => {
     createLocation({
       name: locationName,
@@ -44,38 +47,40 @@ export const LocationForm = () => {
   });
 
   return (
-    <ScrollView style={styles.scrollView}>
-      <View style={styles.scrollViewGroup}>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Name:</Text>
+    <ScrollView style={formStyles.scrollView}>
+      <View style={formStyles.scrollViewGroup}>
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Name:</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeLocationName}
             value={locationName || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Addresse:</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Addresse:</Text>
           <TextInput
-            style={styles.input}
+            style={formStyles.input}
             onChangeText={onChangeAddress}
             value={locationAddress || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Notizen:</Text>
+
+        <View style={formStyles.inputBox}>
+          <Text style={formStyles.inputLabel}>Notizen:</Text>
           <TextInput
-            style={styles.bigInput}
+            style={formStyles.bigInput}
             multiline={true}
             onChangeText={onChangeNotes}
             value={locationNotes || ""}
           />
         </View>
-        <View style={styles.inputBox}>
-          <Text style={styles.inputLabel}>Bild hinzufügen:</Text>
 
+        <View style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}>
+          <Text style={formStyles.inputLabel}>Bild hinzufügen:</Text>
           <CameraButton
-            title={"openCamera"}
+            title={""}
             icon="camera"
             onPress={() => navigation.navigate("LocationCamera")}
           />
@@ -85,46 +90,5 @@ export const LocationForm = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    backgroundColor: "white",
-    width: "65%",
-    marginRight: "10%",
-  },
-  bigInput: {
-    height: 100,
-    margin: 12,
-    borderWidth: 1,
-    borderRadius: 4,
-    padding: 10,
-    backgroundColor: "white",
-    width: "65%",
-    marginRight: "10%",
-  },
-  inputBox: {
-    flexDirection: "row",
-    alignSelf: "left",
-    justifyContent: "left",
-    alignItems: "center",
-    width: "100%",
-  },
-  inputLabel: {
-    textAlign: "right",
-    width: "25%",
-    padding: 10,
-  },
-  scrollView: {},
-  scrollViewGroup: {
-    padding: 20,
-    margin: 20,
-    borderRadius: 10,
-    backgroundColor: "white",
-  },
-});
 /*() => navigation.navigate("LocationCamera")
 <CameraButton title={'openCamera'} icon="camera" />*/
