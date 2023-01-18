@@ -1,6 +1,6 @@
 /**
  * LocationTile.js
- * 
+ *
  * Component used to display a Location in form of a small tile in a roster in LocationList.
  */
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
@@ -15,10 +15,10 @@ export const LocationTile = (props) => {
   const location = props.location;
   const [imgURL, setimgURL] = useState();
 
-  useEffect(() => {
+  /*useEffect(() => {
     downloadImageAsync(location.imgUuid).then((url) => setimgURL(url));
     console.log(imgURL);
-  });
+  });*/
   return (
     <TouchableOpacity
       style={[defaultStyles.locationTile]}

@@ -46,11 +46,11 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-connectAuthEmulator(auth, "http://localhost:9099");
+//connectAuthEmulator(auth, "http://localhost:9099");
 const db = getFirestore(app);
-connectFirestoreEmulator(db, "localhost", 8080);
+//connectFirestoreEmulator(db, "localhost", 8080);
 const storage = getStorage(app);
-connectStorageEmulator(storage, "localhost", 9199);
+//connectStorageEmulator(storage, "localhost", 9199);
 
 export async function SignUp(eMail, password, firstName, surName) {
   createUserWithEmailAndPassword(auth, eMail, password)

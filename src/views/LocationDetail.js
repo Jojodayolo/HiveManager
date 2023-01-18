@@ -1,6 +1,6 @@
 /**
  * LocationDetails.js
- * 
+ *
  * Part of LocationShow relevant for displaying the content of the selected hive.
  */
 import React, { useState, useEffect } from "react";
@@ -28,7 +28,6 @@ const Item = ({ item, onPress }) => (
     <Text style={styles.name}>{item.name}</Text>
   </TouchableOpacity>
 );
-
 
 export const LocationDetail = (props) => {
   const navigation = useNavigation();
@@ -95,7 +94,7 @@ export const LocationDetail = (props) => {
         style={styles.docButton}
         onPress={onDocForm}
       />
-      <FlatList 
+      <FlatList
         //The list of documentation for the selected hive.
         style={defaultStyles.docDetailListStyle}
         data={localDocs}
@@ -123,8 +122,7 @@ const styles = StyleSheet.create({
     marginVertical: 0.5,
     marginHorizontal: 0,
   },
-  title: {
-  },
+  title: {},
   docButton: {
     margin: 20,
     padding: 20,

@@ -16,16 +16,6 @@ export const HiveForm = ({ route }) => {
   const navigation = useNavigation();
   const locID = route.params.locID;
 
-  useEffect(() => {
-    navigation.setOptions({
-      headerRight: () => <Button title="Fertig" onPress={onDone} />,
-      headerLeft: () => (
-        <Button title="Abbrechen" onPress={navigation.goBack} />
-      ),
-      headerTitle: "Bienenstock hinzufügen",
-    });
-  });
-
   /*
    * onDone()
    * Creates a new hive with the entered values for the current location.
