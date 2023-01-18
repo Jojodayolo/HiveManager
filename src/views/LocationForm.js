@@ -16,7 +16,7 @@ import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 import { createLocation } from "../../firebaseConfig";
 
-export const LocationForm = ({ route }) => {
+export const LocationForm = () => {
   const [locationName, onChangeLocationName] = React.useState("");
   const [locationAddress, onChangeAddress] = React.useState("");
   const [locationNotes, onChangeNotes] = React.useState("");
@@ -25,13 +25,6 @@ export const LocationForm = ({ route }) => {
   const navigation = useNavigation();
 
   const onDone = () => {
-    /*dispatch(
-      createLocation({
-        name: locationName,
-        address: locationAddress,
-        notes: locationNotes,
-      })
-    );*/
     createLocation({
       name: locationName,
       address: locationAddress,

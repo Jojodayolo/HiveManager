@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
 import { Button, StyleSheet, Text, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useSelector } from "react-redux";
 
 export const DocumentationViewer = ({ route }) => {
-  const documentations = useSelector(
-    (state) => state.documentations.documentations
-  );
-  const uuid = route.params.uuid;
-  const currentDocument = documentations.filter((loc) => loc.uuid === uuid);
-
+  const currentDocument = route.params.doc;
+  console.log(currentDocument);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -25,46 +20,42 @@ export const DocumentationViewer = ({ route }) => {
       <View style={styles.scrollViewGroup}>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Volksstärke</Text>
-          <Text style={styles.outputLabel}>
-            {currentDocument[0].population}
-          </Text>
+          <Text style={styles.outputLabel}>{currentDocument.population}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>
             <Text style={styles.inputLabel}>Honigwaben</Text>
             <Text style={styles.inputLabelBold}>(kg)</Text>
           </Text>
-          <Text style={styles.outputLabel}>
-            {currentDocument[0].honeycombs}
-          </Text>
+          <Text style={styles.outputLabel}>{currentDocument.honeycombs}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>
             <Text style={styles.inputLabel}>Königin gesehen </Text>
             <Text style={styles.inputLabelBold}> K / Sifte S</Text>
           </Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].queen}</Text>
+          <Text style={styles.outputLabel}>{currentDocument.queen}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Baurahmen +/- (geschnitten)</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].frame}</Text>
+          <Text style={styles.outputLabel}>{currentDocument.frame}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Weiselzellen</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].cells}</Text>
+          <Text style={styles.outputLabel}>{currentDocument.cells}</Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>
             <Text style={styles.inputLabel}>Gefüttert </Text>
             <Text style={styles.inputLabelBold}>(ml/kg)</Text>
           </Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].fed}</Text>
+          <Text style={styles.outputLabel}>{currentDocument.fed}</Text>
         </View>
         <View
           style={[styles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
         >
           <Text style={styles.inputLabel}>Notizen</Text>
-          <Text style={styles.outputLabel}>{currentDocument[0].notes}</Text>
+          <Text style={styles.outputLabel}>{currentDocument.notes}</Text>
         </View>
       </View>
 
@@ -103,7 +94,7 @@ export const DocumentationViewer = ({ route }) => {
             Bezeichnung des Arzneimittls (+ Charge):
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.name}
+            {currentDocument.drugData.name}
           </Text>
         </View>
         <View style={styles.inputBox}>
@@ -112,7 +103,7 @@ export const DocumentationViewer = ({ route }) => {
             <Text style={styles.inputLabelBold}>(ml)</Text>
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.amount}
+            {currentDocument.drugData.amount}
           </Text>
         </View>
         <View style={styles.inputBox}>
@@ -120,13 +111,13 @@ export const DocumentationViewer = ({ route }) => {
             Name und Anschrift des Lieferanten
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.supplier}
+            {currentDocument.drugData.supplier}
           </Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Belegnummer</Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.receiptnumber}
+            {currentDocument.drugData.receiptnumber}
           </Text>
         </View>
         <View style={styles.inputBox}>
@@ -134,13 +125,13 @@ export const DocumentationViewer = ({ route }) => {
             Standort der Bienenvölker (Flurnummer oder Bezeichnung)
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.colonyLocation}
+            {currentDocument.drugData.colonyLocation}
           </Text>
         </View>
         <View style={styles.inputBox}>
           <Text style={styles.inputLabel}>Nummern der Bienenvölker</Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.colonyNumber}
+            {currentDocument.drugData.colonyNumber}
           </Text>
         </View>
         <View style={styles.inputBox}>
@@ -148,7 +139,7 @@ export const DocumentationViewer = ({ route }) => {
             Ggf. Name und Anschrift des Tierarztes
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.vetInfo}
+            {currentDocument.drugData.vetInfo}
           </Text>
         </View>
         <View style={styles.inputBox}>
@@ -156,7 +147,7 @@ export const DocumentationViewer = ({ route }) => {
             Wartezeit (Laut Packungsbeilage)
           </Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.waitingPeriod}
+            {currentDocument.drugData.waitingPeriod}
           </Text>
         </View>
         <View
@@ -164,7 +155,7 @@ export const DocumentationViewer = ({ route }) => {
         >
           <Text style={styles.inputLabel}>Behandlungsdauer</Text>
           <Text style={styles.outputLabel}>
-            {currentDocument[0].drugData.treatmentDuration}
+            {currentDocument.drugData.treatmentDuration}
           </Text>
         </View>
       </View>

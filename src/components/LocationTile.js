@@ -1,24 +1,18 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector } from "react-redux";
-import { removeLocation } from "../redux/actions";
 import DeleteMenu from "../components/DeleteMenu";
 import { defaultStyles } from "../views/Styles";
+
 export const LocationTile = (props) => {
   const navigation = useNavigation();
   let location = props.location;
-  const dispatch = useDispatch();
-
   return (
     <TouchableOpacity
       style={[defaultStyles.locationTile]}
       onPress={() =>
-        navigation.navigate("LocationShow", { uuid: location.uuid })
+        navigation.navigate("LocationShow", { location: location })
       }
-      onLongPress={() => {
-        dispatch(removeLocation({ payload: location.uuid }));
-      }}
     >
       <View flex={1} style={{ flex: 1 }}>
         <DeleteMenu style={styles.menu} />

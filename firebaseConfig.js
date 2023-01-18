@@ -5,19 +5,19 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  connectAuthEmulator,
 } from "firebase/auth";
 import {
   getFirestore,
   collection,
   getDocs,
-  getDoc,
   addDoc,
   doc,
-  addCol,
+  query,
+  where,
+  connectFirestoreEmulator,
 } from "firebase/firestore";
 import "firebase/firestore";
-import { useDispatch } from "react-redux";
-import { setUser } from "./src/redux/actions";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -36,14 +36,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+connectAuthEmulator(auth, "http://localhost:9099");
 const db = getFirestore(app);
-
+connectFirestoreEmulator(db, "localhost", 8080);
 // Initialize Firebase
 
 export async function SignUp(eMail, password, firstName, surName) {
   createUserWithEmailAndPassword(auth, eMail, password)
     .then((userCredential) => {
-      user = userCredential.user;
+      const user = userCredential.user;
       createUserInDB(firstName, surName);
       return user.uid;
     })
@@ -68,73 +69,210 @@ export async function SignIn(eMail, password) {
     });
 }
 async function createUserInDB(firstName, surName) {
-  if (user !== null) {
-    userDocRef = await addDoc(collection(db, "users"), {
-      uid: user.uid,
+  if (auth.currentUser !== null) {
+    await addDoc(collection(db, "users"), {
+      uid: auth.currentUser.uid,
       firstName: firstName,
       lastName: surName,
-      email: user.email,
+      email: auth.currentUser.email,
     });
-
-    console.log("Document written with ID: ", userDocRef.id);
   }
 }
 
-export async function getUserData() {}
+export async function getLocations() {
+  const user = auth.currentUser;
 
-async function getUserFromDB(user, db) {
-  //var docRef = db.collection("Locations").getDocs(user.uid);
-  //console.log(user.then.collection(app, "user"));
-
-  if (user !== null) {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    try {
-      querySnapshot.forEach((doc) => {
-        if (doc.data().uid !== null && doc.data().uid === user.uid) {
-          console.log(doc);
-          console.log(doc.data());
-          return doc;
-        }
-      });
-    } catch (e) {
-      console.log(e);
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
     }
-  }
+  });
+
+  const colRef = collection(db, "users", userDocID, "locations");
+  const locationsQuery = query(colRef);
+
+  const locationsSnapshot = await getDocs(locationsQuery);
+  var locArray = [];
+  locationsSnapshot.forEach((loc) => {
+    const tmp = loc.data();
+    tmp.docID = loc.id;
+    locArray.push(tmp);
+  });
+
+  return locArray;
+}
+
+export async function getHives(locDocID) {
+  const user = auth.currentUser;
+
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+
+  var userDocID;
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const colRef = collection(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locDocID,
+    "hives"
+  );
+  const hivesQuery = query(colRef);
+
+  const hivesSnapshot = await getDocs(hivesQuery);
+  var hiveArray = [];
+  hivesSnapshot.forEach((hive) => {
+    const tmp = hive.data();
+    tmp.hiveID = hive.id;
+    hiveArray.push(tmp);
+  });
+
+  return hiveArray;
+}
+
+export async function getDocumentations(locDocID, hiveID) {
+  const user = auth.currentUser;
+
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+
+  var userDocID;
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const colRef = collection(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locDocID,
+    "hives",
+    hiveID,
+    "documentations"
+  );
+  const docsQuery = query(colRef);
+
+  const docsSnapshot = await getDocs(docsQuery);
+  var docsArray = [];
+  docsSnapshot.forEach((doc) => {
+    const tmp = doc.data();
+    tmp.docID = doc.id;
+    docsArray.push(tmp);
+  });
+  return docsArray;
 }
 
 export async function createLocation(data) {
   const user = auth.currentUser;
   console.log(user);
-  var userDocRef;
 
-  const querySnapshot = await getDocs(collection(db, "users"));
-  try {
-    querySnapshot.forEach((doc) => {
-      if (doc.data().uid !== null && doc.data().uid === user.uid) {
-        userDocRef = doc;
-        console.log(doc);
-        console.log(doc.data());
-      }
-    });
-  } catch (e) {
-    console.log(e);
-  }
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
 
-  if (userDocRef !== null) {
-    console.log(userDocRef);
+  console.log(q);
+  var userDocID;
+  const querySnapshot = await getDocs(q);
 
-    const locRef = await addDoc(
-      collection(doc(db, "users", user.uid), "locations"),
-      {
-        name: data.name,
-        address: data.address,
-        notes: data.notes,
-      }
-    );
-  }
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const colRef = collection(db, "users", userDocID, "locations");
+
+  addDoc(colRef, {
+    name: data.name,
+    address: data.address,
+    notes: data.notes,
+  });
 }
-export async function createHive(uid, locid, data) {} //????
-export async function createDocumentation(uid, locid, hiveid, data) {} //????
+export async function createHive(locDocID, data) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+      console.log(userDocID);
+    }
+  });
+
+  const hivesRef = collection(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locDocID,
+    "hives"
+  );
+  const hivesQuery = query(hivesRef);
+  const ref = await addDoc(hivesQuery, {
+    name: data.name,
+  });
+}
+export async function createDocumentation(locDocID, hiveID, data) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+      console.log(userDocID);
+    }
+  });
+
+  const docRef = collection(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locDocID,
+    "hives",
+    hiveID,
+    "documentations"
+  );
+  const docQuery = query(docRef);
+
+  const ref = await addDoc(docQuery, {
+    date: Date.now(),
+    population: data.population,
+    honeycombs: data.honeycombs,
+    queen: data.queen,
+    frame: data.frame,
+    cells: data.cells,
+    fed: data.fed,
+    notes: data.notes,
+    drugData: {
+      name: data.drugData.name,
+      amount: data.drugData.amount,
+      supplier: data.drugData.supplier,
+      receiptnumber: data.drugData.receiptnumber,
+      colonyLocation: data.drugData.colonyLocation,
+      colonyNumber: data.drugData.colonyNumber,
+      vetInfo: data.drugData.vetInfo,
+      waitingPeriod: data.drugData.waitingPeriod,
+      treatmentDuration: data.drugData.treatmentDuration,
+    },
+  });
+} //????
 
 export async function removeLocation(uid) {} //????
 export async function removeHive(uid, locid) {} //????

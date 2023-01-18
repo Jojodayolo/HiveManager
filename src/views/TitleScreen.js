@@ -43,8 +43,8 @@ export const TitleScreen = () => {
         <Button
           title="Login"
           onPress={() => {
-            var uid = SignIn(eMail, password);
-            navigation.navigate("LocationList", { uid });
+            SignIn(eMail, password);
+            navigation.navigate("LocationList");
           }}
         />
         <Button

@@ -2,26 +2,26 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import {
   DividerHorizontal,
   DividerVertical,
 } from "../components/designComonents";
+import { getDocumentations } from "../../firebaseConfig";
 
 // needs a style rework text is alwys black
 const Item = ({ item, onPress }) => (
   <TouchableOpacity style={[defaultStyles.documentationItem]} onPress={onPress}>
     <Text style={styles.name}>
-      {item.date.getDate() +
+      {new Date(item.date).getDate() +
         "." +
-        (item.date.getMonth() + 1) +
+        (new Date(item.date).getMonth() + 1) +
         "." +
-        item.date.getFullYear() +
+        new Date(item.date).getFullYear() +
         " " +
-        item.date.getHours() +
+        new Date(item.date).getHours() +
         ":" +
-        item.date.getMinutes()}
+        new Date(item.date).getMinutes()}
     </Text>
     <Text style={styles.name}>{item.name}</Text>
   </TouchableOpacity>
@@ -30,50 +30,49 @@ const Item = ({ item, onPress }) => (
 export const LocationDetail = (props) => {
   const navigation = useNavigation();
   const [selectedId, setSelectedId] = useState(null);
+  const [localDocs, setLocalDocs] = useState([]);
+  const hive = props.hive;
+  const locID = props.locID;
   //Item that gets Highlighted when selected
   const renderItem = ({ item }) => {
     const onDocSelected = () => {
-      setSelectedId(item.uuid);
-      navigation.navigate("DocumentationViewer", { uuid: item.uuid });
+      setSelectedId(item.docID);
+      navigation.navigate("DocumentationViewer", {
+        doc: item,
+      });
     };
     return <Item item={item} onPress={onDocSelected} />;
   };
 
-  //Get the selected Hive
-  const selectedHive = useSelector((state) =>
-    state.hives.hives.filter((hive) => hive.uuid === props.uuid)
-  );
+  useEffect(() => {
+    try {
+      getDocumentations(locID, hive.hiveID).then((docs) => setLocalDocs(docs));
+    } catch (error) {
+      console.log(error);
+    }
+  });
 
-  //Filter the documentations for the ones that belong to the hive
-  const documentations = useSelector((state) => state.documentations);
-  var localDocs;
-  try {
-    localDocs = documentations.documentations.filter((doc) =>
-      selectedHive[0].docIDs.includes(doc.uuid)
-    );
-  } catch (error) {
-    localDocs = [];
-  }
+  const onDocForm = () => {
+    navigation.navigate("DocumentationForm", {
+      hiveID: hive.hiveID,
+      locID: locID,
+    });
+  };
 
   //dont display a list if there are no docs or display nothing if no hive is selected(second should only happen if a location has no hives)
-  if (props.uuid === null || selectedHive.length === 0) {
+  if (props.hive === null || hive === 0) {
     return <View style={defaultStyles.docDetailList} />;
   } else if (localDocs.length === 0) {
-    console.log(selectedHive[0].name);
     return (
       <View style={styles.container}>
         <Text flex={1} style={styles.hiveTitle}>
-          {selectedHive[0].name}
+          {hive.name}
         </Text>
         <Button
           flex={2}
           title="Dokumentationen Hinzufügen"
           style={styles.docButton}
-          onPress={() =>
-            navigation.navigate("DocumentationForm", {
-              uuid: selectedHive[0].uuid,
-            })
-          }
+          onPress={onDocForm}
         />
         <View
           flex={3}
@@ -89,21 +88,17 @@ export const LocationDetail = (props) => {
   //Full render if data is available
   return (
     <View style={styles.container}>
-      <Text style={styles.hiveTitle}>{selectedHive[0].name}</Text>
+      <Text style={styles.hiveTitle}>{hive.name || ""}</Text>
       <Button
         title="Dokumentationen Hinzufügen"
         style={styles.docButton}
-        onPress={() =>
-          navigation.navigate("DocumentationForm", {
-            uuid: selectedHive[0].uuid,
-          })
-        }
+        onPress={onDocForm}
       />
       <FlatList // The list of the Documentation for the selected hive
         style={defaultStyles.docDetailListStyle}
         data={localDocs}
         renderItem={renderItem}
-        keyExtractor={(item) => item.uuid}
+        keyExtractor={(item) => item.docID}
         contentContainerStyle={defaultStyles.docDetailListContentContainerStyle}
         ItemSeparatorComponent={() => <DividerHorizontal width={"80%"} />}
       />

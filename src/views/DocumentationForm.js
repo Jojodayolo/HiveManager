@@ -8,14 +8,14 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { createDocumentation } from "../../firebaseConfig";
 import DropdownComponent from "../components/Dropdown";
-import { useDispatch, useSelector } from "react-redux";
-import { addDoc, createDoc } from "../redux/actions";
-import Store from "../redux/store";
 
 export const DocumentationForm = ({ route }) => {
-  const uuid = route.params.uuid;
+  const hiveID = route.params.hiveID;
+  const locID = route.params.locID;
   console.log(route);
+
   const [population, onChangePopulation] = React.useState("");
   const [honeycombs, onChangeHoneycombs] = React.useState("");
   const [queen, onChangeQueen] = React.useState("");
@@ -36,37 +36,29 @@ export const DocumentationForm = ({ route }) => {
     React.useState("");
 
   const navigation = useNavigation();
-  const dispatch = useDispatch();
 
   const onDone = () => {
-    dispatch(
-      createDoc({
-        population: population,
-        honeycombs: honeycombs,
-        queen: queen,
-        frame: frame,
-        cells: cells,
-        fed: fed,
-        notes: notes,
-        drugData: {
-          name: drugName,
-          amount: drugAmount,
-          supplier: drugSupplier,
-          receiptnumber: drugReceiptnumber,
-          colonyLocation: drugColonyLocation,
-          colonyNumber: drugColonyNumber,
-          vetInfo: drugVetInfo,
-          waitingPeriod: drugWaitingperiod,
-          treatmentDuration: drugTreatmentDuration,
-        },
-      })
-    );
-    const state = Store.store.getState();
-    console.log(uuid);
-    console.log(state.documentations.newestDocID);
-    dispatch(
-      addDoc({ hiveUuid: uuid, docUuid: state.documentations.newestDocID })
-    );
+    console.log(locID, hiveID);
+    createDocumentation(locID, hiveID, {
+      population: population,
+      honeycombs: honeycombs,
+      queen: queen,
+      frame: frame,
+      cells: cells,
+      fed: fed,
+      notes: notes,
+      drugData: {
+        name: drugName,
+        amount: drugAmount,
+        supplier: drugSupplier,
+        receiptnumber: drugReceiptnumber,
+        colonyLocation: drugColonyLocation,
+        colonyNumber: drugColonyNumber,
+        vetInfo: drugVetInfo,
+        waitingPeriod: drugWaitingperiod,
+        treatmentDuration: drugTreatmentDuration,
+      },
+    });
     navigation.goBack();
   };
 

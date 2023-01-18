@@ -8,15 +8,12 @@ import {
   Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch, useSelector, useState } from "react-redux";
-import { addHive, createHive } from "../redux/actions";
-import Store from "../redux/store";
+import { createHive } from "../../firebaseConfig";
 
 export const HiveForm = ({ route }) => {
   const [hiveName, onChangeText] = React.useState();
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-  const uuid = route.params.uuid;
+  const locID = route.params.locID;
 
   useEffect(() => {
     navigation.setOptions({
@@ -29,9 +26,14 @@ export const HiveForm = ({ route }) => {
   });
 
   const onDone = () => {
-    dispatch(createHive({ name: hiveName }));
+    /*dispatch(createHive({ name: hiveName }));
     const state = Store.store.getState();
-    dispatch(addHive({ locUuid: uuid, hiveUuid: state.hives.newestHiveID }));
+    dispatch(addHive({ locUuid: uuid, hiveUuid: state.hives.newestHiveID }));*/
+    console.log(locID);
+    createHive(locID, {
+      name: hiveName,
+    });
+
     navigation.goBack();
   };
 

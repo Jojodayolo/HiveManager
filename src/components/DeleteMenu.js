@@ -2,20 +2,15 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import {
   Menu,
-  MenuProvider,
   MenuOptions,
   MenuOption,
   MenuTrigger,
 } from "react-native-popup-menu";
 import { Entypo } from "@expo/vector-icons";
-import { removeLocation } from "../redux/actions";
-import { useDispatch, useSelector } from "react-redux";
 
 const Divider = () => <View style={styles.divider} />;
 
 const DeleteMenu = () => {
-  const dispatch = useDispatch();
-
   return (
     <Menu style={[styles.container]}>
       <MenuTrigger>

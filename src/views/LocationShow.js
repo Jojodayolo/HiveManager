@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  FlatList,
-  Text,
-  View,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import { FlatList, Text, View, Button, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { LocationDetail } from "./LocationDetail";
-import { useDispatch, useSelector } from "react-redux";
 import { defaultStyles } from "./Styles";
 import DeleteMenu from "../components/DeleteMenu";
 import {
   DividerVertical,
   DividerHorizontal,
 } from "../components/designComonents";
+import { getHives } from "../../firebaseConfig";
 
 //The List Item to be rendered
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -34,41 +27,40 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
-  var locations = useSelector((state) => state.locations);
-  var hives = useSelector((state) => state.hives.hives);
-  const [selectedId, setSelectedId] = useState();
+  const [hiveList, setHiveList] = useState([]);
+  const [selectedHive, setSelectedHive] = useState(null);
+  const location = route.params.location;
+
   const renderItem = ({ item }) => {
-    const backgroundColor = item.uuid === selectedId ? "#157EFB" : "white";
-    const color = item.uuid === selectedId ? "white" : "black";
+    const backgroundColor = item === selectedHive ? "#157EFB" : "white";
+    const color = item === selectedHive ? "white" : "black";
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.uuid)}
+        onPress={() => {
+          setSelectedHive(item);
+        }}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
     );
   };
 
-  //Set the title to the Location Name
-  const uuid = route.params.uuid;
-
   //Get all locations and filter the Selected one
-  const location = locations.filter((loc) => loc.uuid === uuid);
-
-  //get all hives and filter the hives that belong to the location
-  const localHives = hives.filter((hive) =>
-    location[0].hiveIDs.includes(hive.uuid)
-  );
+  useEffect(() => {
+    getHives(location.docID).then((hives) => setHiveList(hives));
+  });
 
   //Setting the Navigation Title and Buttons
   useEffect(() => {
     navigation.setOptions({
-      title: location[0].name,
+      title: location.name,
       headerRight: () => (
         <Button
           title="Hinzufügen"
-          onPress={() => navigation.navigate("HiveForm", { uuid: uuid })}
+          onPress={() => {
+            navigation.navigate("HiveForm", { locID: location.docID });
+          }}
         />
       ),
     });
@@ -81,9 +73,9 @@ export const LocationShow = ({ route }) => {
       <View style={{ flex: 1 }}>
         <FlatList // The list of the Hives at the selected Location
           style={{ marginBottom: 30 }}
-          data={localHives}
+          data={hiveList}
           renderItem={renderItem}
-          keyExtractor={(item) => item.uuid}
+          keyExtractor={(item) => item.hiveID}
           ListEmptyComponent={
             <Text style={{ alignSelf: "center" }}>Currently no Hives here</Text>
           }
@@ -94,7 +86,11 @@ export const LocationShow = ({ route }) => {
         />
       </View>
       <DividerVertical style={{ flex: 2 }} />
-      <LocationDetail style={{ flex: 3 }} uuid={selectedId} />
+      <LocationDetail
+        style={{ flex: 3 }}
+        hive={selectedHive}
+        locID={location.docID}
+      />
     </View>
   );
 };

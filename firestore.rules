@@ -1,0 +1,17 @@
+	rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+		match /users/{userID} {
+      allow read, write: if true;
+      match /locations/{locationID} {
+      allow read,write: if true;
+      match /hives/{hiveID} {
+      allow read,write: if true;
+      match /documentations/{docID} {
+        allow read,write: if true;
+      }
+      }
+      }
+   }
+  }
+}

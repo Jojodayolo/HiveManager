@@ -1,20 +1,20 @@
 import { StyleSheet, View, Button } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { defaultStyles } from "./Styles";
-import DeleteMenu from "../components/DeleteMenu";
+import { getLocations } from "../../firebaseConfig";
 
 export const LocationList = ({ route }) => {
+  const [locList, setLocList] = useState([]);
   const navigation = useNavigation();
-  const uid = route.params.uid;
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button
           title="Hinzufügen"
-          onPress={() => navigation.navigate("LocationForm", { uid })}
+          onPress={() => navigation.navigate("LocationForm")}
         />
       ),
       headerLeft: () => (
@@ -27,18 +27,21 @@ export const LocationList = ({ route }) => {
     });
   });
 
+  useEffect(() => {
+    getLocations().then((list) => setLocList(list));
+  });
+
   return (
-    <View />
-    /*<View style={[styles.container, defaultStyles.container]}>
+    <View style={[styles.container, defaultStyles.container]}>
       <SuperGridSectionList
         itemDimension={100}
-        data={locations}
+        data={locList}
         spacing={30}
         maxItemsPerRow={5}
         flex={1}
         renderItem={({ item }) => <LocationTile location={item} />}
       />
-    </View>*/
+    </View>
   );
 };
 
