@@ -15,10 +15,6 @@ export const LocationTile = (props) => {
   const location = props.location;
   const [imgURL, setimgURL] = useState();
 
-  useEffect(() => {
-    downloadImageAsync(location.imgUuid).then((url) => setimgURL(url));
-    console.log(imgURL);
-  });
   return (
     <TouchableOpacity
       style={[defaultStyles.locationTile]}

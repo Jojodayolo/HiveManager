@@ -1,3 +1,8 @@
+/**
+ * LocationList.js
+ * 
+ * View that lists all currently existing Locations in a roster.
+ */
 import { StyleSheet, View, Button } from "react-native";
 import React, { useEffect, useState } from "react";
 import { LocationTile } from "../components/LocationTile";
@@ -6,9 +11,14 @@ import { useNavigation } from "@react-navigation/native";
 import { defaultStyles } from "./Styles";
 import { getLocations } from "../../firebaseConfig";
 
+
 export const LocationList = ({ route }) => {
   const [locList, setLocList] = useState([]);
   const navigation = useNavigation();
+
+  /**
+   * Function used to add Buttons to the header.
+   */
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (

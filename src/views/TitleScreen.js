@@ -3,7 +3,7 @@
  * 
  * Represents the initial Title/Login Screen of the App.
  */
-import React from "react";
+import React, { useEffect }from "react";
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
 import { auth, SignIn, SignUp, getLocations } from "../../firebaseConfig";
@@ -13,6 +13,17 @@ export const TitleScreen = () => {
   const [eMail, onEMail] = React.useState("max@mustermann.com");
   const [password, onPassword] = React.useState("admin123");
   const navigation = useNavigation();
+
+  /**
+   * useEffect()
+   * Function used to set the header title.
+   */
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: "HiveManager",
+    });
+  });
+
   return (
     <View
       style={[

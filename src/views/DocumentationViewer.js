@@ -8,6 +8,7 @@ import { Button, Text, View, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { formStyles } from "./Styles";
 
+
 export const DocumentationViewer = ({ route }) => {
   const currentDocument = route.params.doc;
   console.log(currentDocument);
@@ -16,7 +17,7 @@ export const DocumentationViewer = ({ route }) => {
 
   /**
    * useEffect()
-   * Function used to add and edit Buttons to the header.
+   * Function used to add Buttons to the header.
    */
   useEffect(() => {
     navigation.setOptions({
