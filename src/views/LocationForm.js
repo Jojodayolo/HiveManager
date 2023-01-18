@@ -1,20 +1,14 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Text,
-  View,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { Button, Text, View, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 import { createLocation } from "../../firebaseConfig";
+import { formStyles } from "./Styles";
 
 export const LocationForm = () => {
-
   //Various Variables of a location
   const [locationName, onChangeLocationName] = React.useState("");
   const [locationAddress, onChangeAddress] = React.useState("");
@@ -24,7 +18,7 @@ export const LocationForm = () => {
   const navigation = useNavigation();
 
   /*
-   * onDone() 
+   * onDone()
    * Creates a new location with the entered values.
    */
   const onDone = () => {
@@ -77,7 +71,12 @@ export const LocationForm = () => {
           />
         </View>
 
-        <View style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}>
+        <View
+          style={[
+            formStyles.inputBox,
+            { borderBottomWidth: 0, paddingBottom: 0 },
+          ]}
+        >
           <Text style={formStyles.inputLabel}>Bild hinzufügen:</Text>
           <CameraButton
             title={""}

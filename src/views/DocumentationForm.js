@@ -1,14 +1,9 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Text,
-  View,
-  TextInput,
-  ScrollView,
-} from "react-native";
+import { Button, Text, View, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createDocumentation } from "../../firebaseConfig";
 import DropdownComponent from "../components/Dropdown";
+import { formStyles } from "./Styles";
 
 export const DocumentationForm = ({ route }) => {
   const hiveID = route.params.hiveID;
@@ -23,7 +18,7 @@ export const DocumentationForm = ({ route }) => {
   const [cells, onChangeCells] = React.useState("");
   const [fed, onChangeFed] = React.useState("");
   const [notes, onChangeNotes] = React.useState("");
-  
+
   const [drugName, onChangeDrugName] = React.useState("");
   const [drugAmount, onChangeDrugAmount] = React.useState("");
   const [drugSupplier, onChangeDrugSupplier] = React.useState("");
@@ -32,12 +27,13 @@ export const DocumentationForm = ({ route }) => {
   const [drugColonyNumber, onChangeDrugColonyNumber] = React.useState("");
   const [drugVetInfo, onChangeDrugVetInfo] = React.useState("");
   const [drugWaitingperiod, onChangeDrugWaitingperiod] = React.useState("");
-  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] = React.useState("");
+  const [drugTreatmentDuration, onChangeDrugTreatmentDuration] =
+    React.useState("");
 
   const navigation = useNavigation();
 
   /*
-   * onDone() 
+   * onDone()
    * Creates a new document with the entered values for the current hive .
    */
   const onDone = () => {
@@ -75,7 +71,6 @@ export const DocumentationForm = ({ route }) => {
     });
   });
 
-
   return (
     <ScrollView style={formStyles.scrollView}>
       <View style={formStyles.scrollViewGroup}>
@@ -90,7 +85,7 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View style={formStyles.inputBox}>
-            <Text style={formStyles.inputLabel}>Honigwaben (kg)</Text>
+          <Text style={formStyles.inputLabel}>Honigwaben (kg)</Text>
           <TextInput
             style={formStyles.input}
             onChangeText={onChangeHoneycombs}
@@ -99,8 +94,10 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View style={formStyles.inputBox}>
-            <Text style={formStyles.inputLabel}>Königin gesehen K / Stifte S</Text>
-            <TextInput
+          <Text style={formStyles.inputLabel}>
+            Königin gesehen K / Stifte S
+          </Text>
+          <TextInput
             style={formStyles.input}
             maxLength={1}
             onChangeText={onChangeQueen}
@@ -127,7 +124,7 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View style={formStyles.inputBox}>
-            <Text style={formStyles.inputLabel}>Gefüttert (ml/kg)</Text>
+          <Text style={formStyles.inputLabel}>Gefüttert (ml/kg)</Text>
           <TextInput
             style={formStyles.input}
             onChangeText={onChangeFed}
@@ -136,7 +133,10 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View
-          style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+          style={[
+            formStyles.inputBox,
+            { borderBottomWidth: 0, paddingBottom: 0 },
+          ]}
         >
           <Text style={formStyles.inputLabel}>Notizen</Text>
           <TextInput
@@ -175,7 +175,7 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View style={formStyles.inputBox}>
-            <Text style={formStyles.inputLabel}>Menge pro Bienenvolk (ml)</Text>
+          <Text style={formStyles.inputLabel}>Menge pro Bienenvolk (ml)</Text>
           <TextInput
             style={formStyles.input}
             onChangeText={onChangeDrugAmount}
@@ -249,7 +249,10 @@ export const DocumentationForm = ({ route }) => {
         </View>
 
         <View
-          style={[formStyles.inputBox, { borderBottomWidth: 0, paddingBottom: 0 }]}
+          style={[
+            formStyles.inputBox,
+            { borderBottomWidth: 0, paddingBottom: 0 },
+          ]}
         >
           <Text style={formStyles.inputLabel}>Behandlungsdauer</Text>
           <TextInput
