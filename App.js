@@ -1,5 +1,6 @@
-import { Appearance } from "react-native";
-import { DarkTheme } from "@react-navigation/native";
+/**
+ * App.js
+ */
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 import { LocationShow } from "./src/views/LocationShow";

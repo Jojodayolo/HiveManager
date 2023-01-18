@@ -1,3 +1,8 @@
+/**
+ * LocationCamera.js
+ * 
+ * View that includes the Camera used when adding a picture to a new location.
+ */
 import { StyleSheet, Text, View, Image } from "react-native";
 import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
@@ -22,7 +27,10 @@ export const LocationCamera = ({ route }) => {
   const navigation = useNavigation();
   const uuid = route.params.uuid;
 
-  //Requesting permissions to use the camera
+  /**
+   * useEffect()
+   * Function used to request permissions for the devices camera and media library.
+   */
   useEffect(() => {
     async () => {
       MediaLibrary.requestPermissionsAsync();
@@ -31,7 +39,7 @@ export const LocationCamera = ({ route }) => {
     };
   });
 
-  /*
+  /** 
    * takePicture()
    * Takes picture and saves it in the image variable.
    */
@@ -46,7 +54,7 @@ export const LocationCamera = ({ route }) => {
     } catch (e) {}
   }
 
-  /*
+  /** 
    * savePicture()
    * Saves Picture from image variable to the devices MediaLibrary and empties variable.
    */
@@ -64,7 +72,7 @@ export const LocationCamera = ({ route }) => {
   }
 
   if (hasCameraPermission === false) {
-    return <Text>No access</Text>;
+    return <Text>Kein Kamerazugriff!</Text>;
   }
 
   //Camera structure with icon-buttons to (re-)take pictures and swap the camera.

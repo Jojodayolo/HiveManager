@@ -1,3 +1,8 @@
+/**
+ * TitleScreen.js
+ * 
+ * Represents the initial Title/Login Screen of the App.
+ */
 import React from "react";
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";

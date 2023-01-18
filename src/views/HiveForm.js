@@ -1,3 +1,8 @@
+/**
+ * HiveForm.js
+ *
+ * View relevant for creating a new Hive
+ */
 import React, { useEffect } from "react";
 import { Text, View, TextInput, ScrollView, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -33,6 +38,20 @@ export const HiveForm = ({ route }) => {
 
     navigation.goBack();
   };
+
+  /**
+   * useEffect()
+   * Function used to add buttons to the header and set the header title.
+   */
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button title="Fertig" onPress={onDone} />,
+      headerLeft: () => (
+        <Button title="Abbrechen" onPress={navigation.goBack} />
+      ),
+      headerTitle: "Bienenstock hinzufügen",
+    });
+  });
 
   return (
     <ScrollView style={formStyles.scrollView}>

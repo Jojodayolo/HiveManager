@@ -1,3 +1,8 @@
+/**
+ * LocationShow.js
+ * 
+ * View relevant for displaying a Locations content.
+ */
 import React, { useState, useEffect } from "react";
 import { FlatList, Text, View, Button, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -24,6 +29,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
     </View>
   </TouchableOpacity>
 );
+
 
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();

@@ -1,10 +1,14 @@
+/**
+ * designComponents.js
+ * 
+ * Divider Components.
+ */
 import React from "react";
 import { View, StyleSheet } from "react-native";
 
 export const DividerVertical = () => <View style={styles.dividerVertical} />;
-export const DividerHorizontal = () => (
-  <View style={styles.dividerHorizontal} />
-);
+export const DividerHorizontal = () => (<View style={styles.dividerHorizontal} />);
+
 
 const styles = StyleSheet.create({
   dividerVertical: {

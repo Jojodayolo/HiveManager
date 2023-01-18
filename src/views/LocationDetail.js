@@ -1,3 +1,8 @@
+/**
+ * LocationDetails.js
+ * 
+ * Part of LocationShow relevant for displaying the content of the selected hive.
+ */
 import React, { useState, useEffect } from "react";
 import { StyleSheet, FlatList, Text, View, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,7 +11,7 @@ import { defaultStyles } from "./Styles";
 import { DividerHorizontal } from "../components/designComonents";
 import { getDocumentations } from "../../firebaseConfig";
 
-// needs a style rework text is alwys black
+//The Item to be rendered.
 const Item = ({ item, onPress }) => (
   <TouchableOpacity style={[defaultStyles.documentationItem]} onPress={onPress}>
     <Text style={styles.name}>
@@ -23,6 +28,7 @@ const Item = ({ item, onPress }) => (
     <Text style={styles.name}>{item.name}</Text>
   </TouchableOpacity>
 );
+
 
 export const LocationDetail = (props) => {
   const navigation = useNavigation();
@@ -80,7 +86,7 @@ export const LocationDetail = (props) => {
     );
   }
 
-  //Full render if data is available
+  //Full render if data is available.
   return (
     <View style={styles.container}>
       <Text style={styles.hiveTitle}>{hive.name || ""}</Text>
@@ -89,7 +95,8 @@ export const LocationDetail = (props) => {
         style={styles.docButton}
         onPress={onDocForm}
       />
-      <FlatList // The list of the Documentation for the selected hive
+      <FlatList 
+        //The list of documentation for the selected hive.
         style={defaultStyles.docDetailListStyle}
         data={localDocs}
         renderItem={renderItem}
@@ -104,23 +111,19 @@ export const LocationDetail = (props) => {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    //borderColor: "white",
     width: "70%",
   },
   hiveTitle: {
-    //color: "white",
     textAlign: "center",
     fontSize: 20,
     margin: 20,
   },
   item: {
-    //backgroundColor: "#38343C",
     padding: 15,
     marginVertical: 0.5,
     marginHorizontal: 0,
   },
   title: {
-    //color: "white",
   },
   docButton: {
     margin: 20,

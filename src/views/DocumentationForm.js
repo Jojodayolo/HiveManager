@@ -1,8 +1,12 @@
+/**
+ * DocumentationForms.js
+ *
+ * The View relevant for creating a document for a hive.
+ */
 import React, { useEffect } from "react";
 import { Button, Text, View, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { createDocumentation } from "../../firebaseConfig";
-import DropdownComponent from "../components/Dropdown";
 import { formStyles } from "./Styles";
 
 export const DocumentationForm = ({ route }) => {
@@ -61,6 +65,10 @@ export const DocumentationForm = ({ route }) => {
     navigation.goBack();
   };
 
+  /**
+   * useEffect()
+   * Function used to add buttons to the header and set the header title.
+   */
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => <Button title="Fertig" onPress={onDone} />,
