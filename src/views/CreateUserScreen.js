@@ -58,7 +58,10 @@ export const CreateUserScreen = ({ navigation }) => {
       </View>
       <Button
         title="Login"
-        onPress={() => SignUp(eMail, password, firstName, surName)}
+        onPress={() => {
+          SignUp(eMail, password, firstName, surName);
+          navigation.navigate("LocationList");
+        }}
       />
     </View>
   );

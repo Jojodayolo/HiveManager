@@ -1,6 +1,6 @@
 /**
  * LocationTile.js
- * 
+ *
  * Component used to display a Location in form of a small tile in a roster in LocationList.
  */
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";

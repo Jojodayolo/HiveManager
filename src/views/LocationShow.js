@@ -1,6 +1,6 @@
 /**
  * LocationShow.js
- * 
+ *
  * View relevant for displaying a Locations content.
  */
 import React, { useState, useEffect } from "react";
@@ -30,7 +30,6 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-
 export const LocationShow = ({ route }) => {
   const navigation = useNavigation();
   const [hiveList, setHiveList] = useState([]);
@@ -45,6 +44,7 @@ export const LocationShow = ({ route }) => {
         item={item}
         onPress={() => {
           setSelectedHive(item);
+          console.log(item);
         }}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}

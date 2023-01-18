@@ -9,7 +9,6 @@ import { createLocation } from "../../firebaseConfig";
 import { formStyles } from "./Styles";
 import uuid from "react-native-uuid";
 
-
 export const LocationForm = () => {
   //Various Variables of a location
   const [locationName, onChangeLocationName] = React.useState("");
@@ -32,6 +31,16 @@ export const LocationForm = () => {
     });
     navigation.goBack();
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => <Button title="Fertig" onPress={onDone} />,
+      headerLeft: () => (
+        <Button title="Abbrechen" onPress={navigation.goBack} />
+      ),
+      headerTitle: "Standort hinzufügen",
+    });
+  });
 
   return (
     <ScrollView style={formStyles.scrollView}>
