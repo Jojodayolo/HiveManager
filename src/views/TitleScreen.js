@@ -1,9 +1,9 @@
 /**
  * TitleScreen.js
- * 
+ *
  * Represents the initial Title/Login Screen of the App.
  */
-import React, { useEffect }from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Image, Button, TextInput, View, Text } from "react-native";
 import { defaultStyles } from "./Styles";
 import { auth, SignIn, SignUp, getLocations } from "../../firebaseConfig";
@@ -61,8 +61,7 @@ export const TitleScreen = () => {
         <Button
           title="Login"
           onPress={() => {
-            SignIn(eMail, password);
-            navigation.navigate("LocationList");
+            SignIn(eMail, password).then(navigation.navigate("LocationList"));
           }}
         />
         <Button
@@ -77,7 +76,7 @@ export const TitleScreen = () => {
 const styles = StyleSheet.create({
   img: {
     height: 300,
-    width: 300,   
+    width: 300,
   },
   input: {
     height: 40,

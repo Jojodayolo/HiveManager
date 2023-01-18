@@ -1,6 +1,6 @@
 /**
  * LocationList.js
- * 
+ *
  * View that lists all currently existing Locations in a roster.
  */
 import { StyleSheet, View, Button } from "react-native";
@@ -10,7 +10,6 @@ import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { defaultStyles } from "./Styles";
 import { getLocations, Logout } from "../../firebaseConfig";
-
 
 export const LocationList = ({ route }) => {
   const [locList, setLocList] = useState([]);
@@ -40,10 +39,14 @@ export const LocationList = ({ route }) => {
       headerTitle: "Übersicht",
     });
   });
-
   useEffect(() => {
-    getLocations().then((list) => setLocList(list));
-  });
+    //getLocations().then((list) => setLocList(list));
+    console.log(locList);
+    const intervalId = setInterval(() => {
+      getLocations().then((list) => setLocList(list));
+    }, 1000); // in milliseconds
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <View style={[styles.container, defaultStyles.container]}>
