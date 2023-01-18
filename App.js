@@ -14,6 +14,7 @@ import { defaultStyles } from "./src/views/Styles";
 import { MenuProvider } from "react-native-popup-menu";
 import { TitleScreen } from "./src/views/TitleScreen";
 import { CreateUserScreen } from "./src/views/CreateUserScreen";
+import { Impressum } from "./src/views/Impressum"
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App({ navigation }) {
           <Stack.Screen name="LocationCamera" component={LocationCamera} />
           <Stack.Screen name="LocationList" component={LocationList} />
           <Stack.Screen name="HiveForm" component={HiveForm} />
+          <Stack.Screen name="Impressum" component={Impressum} />
           <Stack.Screen
             name="DocumentationForm"
             component={DocumentationForm}
