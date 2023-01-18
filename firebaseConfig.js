@@ -19,6 +19,14 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import "firebase/firestore";
+import {
+  getStorage,
+  uploadBytes,
+  ref,
+  connectStorageEmulator,
+  getDownloadURL,
+} from "firebase/storage";
+import { uuid } from "react-uuid";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -35,12 +43,14 @@ const firebaseConfig = {
   measurementId: "G-QYKRSZL8WE",
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 connectAuthEmulator(auth, "http://localhost:9099");
 const db = getFirestore(app);
 connectFirestoreEmulator(db, "localhost", 8080);
-// Initialize Firebase
+const storage = getStorage(app);
+connectStorageEmulator(storage, "localhost", 9199);
 
 export async function SignUp(eMail, password, firstName, surName) {
   createUserWithEmailAndPassword(auth, eMail, password)
@@ -55,7 +65,6 @@ export async function SignUp(eMail, password, firstName, surName) {
       console.log(errorMessage);
     });
 }
-
 export async function SignIn(eMail, password) {
   signInWithEmailAndPassword(auth, eMail, password)
     .then((userCredential) => {
@@ -172,13 +181,11 @@ export async function getDocumentations(locDocID, hiveID) {
   });
   return docsArray;
 }
-export async function createLocation(data) {
+export async function createLocation(data, image) {
   const user = auth.currentUser;
   console.log(user);
 
   const q = query(collection(db, "users"), where("uid", "==", user.uid));
-
-  console.log(q);
   var userDocID;
   const querySnapshot = await getDocs(q);
 
@@ -194,6 +201,7 @@ export async function createLocation(data) {
     name: data.name,
     address: data.address,
     notes: data.notes,
+    imgUuid: data.imgUuid,
   });
 }
 export async function createHive(locDocID, data) {
@@ -270,8 +278,7 @@ export async function createDocumentation(locDocID, hiveID, data) {
       treatmentDuration: data.drugData.treatmentDuration,
     },
   });
-} //????
-
+}
 export async function removeLocation(locID) {
   const user = auth.currentUser;
   //Get all Users and filter by uid
@@ -352,9 +359,177 @@ export async function removeDocumentation(uid, locid, hiveid) {
   await deleteDoc(docRef);
 }
 
-export async function editLocation(uid, data) {
-  const locationRef = doc(db, "locations", "BJ");
-  setDoc(cityRef, { capital: true }, { merge: true });
+export async function editLocation(locID, data) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+
+  const hives = getHives(locID);
+  (await hives).forEach((hive) => {
+    removeHive(locID, hive.hiveID);
+  });
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(db, "users", userDocID, "locations", locID);
+  setDoc(
+    docRef,
+    {
+      name: data.name,
+      address: data.address,
+      notes: data.notes,
+    },
+    { merge: true }
+  );
 }
-export async function editHive(uid, locid, data) {} //????
-export async function editDocumentation(uid, locid, hiveid, data) {} //????
+export async function editHive(locID, hiveID, data) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //remove Docs from Hive
+  const hives = getDocumentations(locID, hiveID);
+  (await hives).forEach((doc) => {
+    removeHive(locID, hiveID, doc.docID);
+  });
+
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locID,
+    "hives",
+    hiveID
+  );
+
+  setDoc(
+    docRef,
+    {
+      name: data.name,
+    },
+    { merge: true }
+  );
+} //????
+export async function editDocumentation(uid, locid, hiveid, data) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locID,
+    "hives",
+    hiveID,
+    "documentations",
+    docID
+  );
+
+  setDoc(
+    docRef,
+    {
+      lastEdited: Date.now(),
+      population: data.population,
+      honeycombs: data.honeycombs,
+      queen: data.queen,
+      frame: data.frame,
+      cells: data.cells,
+      fed: data.fed,
+      notes: data.notes,
+      drugData: {
+        name: data.drugData.name,
+        amount: data.drugData.amount,
+        supplier: data.drugData.supplier,
+        receiptnumber: data.drugData.receiptnumber,
+        colonyLocation: data.drugData.colonyLocation,
+        colonyNumber: data.drugData.colonyNumber,
+        vetInfo: data.drugData.vetInfo,
+        waitingPeriod: data.drugData.waitingPeriod,
+        treatmentDuration: data.drugData.treatmentDuration,
+      },
+    },
+    { merge: true }
+  );
+}
+export async function uploadImageAsync(uri, uuid) {
+  const blob = await new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+    xhr.onerror = function (e) {
+      console.log(e);
+      reject(new TypeError("Network request failed"));
+    };
+    xhr.responseType = "blob";
+    xhr.open("GET", uri, true);
+    xhr.send(null);
+  });
+
+  const storageRef = ref(storage, "locImg/" + uuid + ".png");
+
+  await uploadBytes(storageRef, blob).then((snapshot) => {
+    console.log(snapshot);
+  });
+
+  return storageRef;
+}
+
+export async function downloadImageAsync(uuid) {
+  const pathReference = ref(storage, "locImg/" + uuid + ".png");
+  console.log(pathReference);
+  getDownloadURL(pathReference)
+    .then((url) => {
+      // Or inserted into an <img> element
+      const img = document.getElementById("myimg");
+      img.setAttribute("src", url);
+      console.log(img);
+      return img;
+    })
+    .catch((error) => {
+      // A full list of error codes is available at
+      // https://firebase.google.com/docs/storage/web/handle-errors
+      switch (error.code) {
+        case "storage/object-not-found":
+          // File doesn't exist
+          break;
+        case "storage/unauthorized":
+          // User doesn't have permission to access the object
+          break;
+        case "storage/canceled":
+          // User canceled the upload
+          break;
+
+        // ...
+
+        case "storage/unknown":
+          // Unknown error occurred, inspect the server response
+          break;
+      }
+    });
+}

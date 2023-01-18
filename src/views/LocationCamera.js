@@ -3,7 +3,9 @@ import { Camera, CameraType } from "expo-camera";
 import * as MediaLibrary from "expo-media-library";
 import React, { useState, useEffect, useRef } from "react";
 import CameraButton from "../components/CameraButton";
-
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
+import { uploadImageAsync } from "../../firebaseConfig";
 /**
  * TODO:
  * - fix Design
@@ -11,70 +13,76 @@ import CameraButton from "../components/CameraButton";
  * - camera is visible on IOS but not in web, but when taking an image it shows the right one
  *
  */
-export const LocationCamera = () => {
+export const LocationCamera = ({ route }) => {
   //Various variables for the camera
   const [hasCameraPermission, setHasCameraPermission] = useState(null);
   const [image, setImage] = useState(null);
   const [type, setType] = useState(CameraType.back);
-  const cameraRef = useRef(null);
+  const cameraRef = useRef();
+  const navigation = useNavigation();
+  const uuid = route.params.uuid;
 
   //Requesting permissions to use the camera
   useEffect(() => {
-    (async () => {
+    async () => {
       MediaLibrary.requestPermissionsAsync();
       const cameraStatus = await Camera.requestCameraPermissionsAsync();
       setHasCameraPermission(cameraStatus.status === "granted");
-    })();
-  }, []);
+    };
+  });
 
   /*
    * takePicture()
    * Takes picture and saves it in the image variable.
    */
-  const takePicture = async () => {
-    if (cameraRef) {
-      try {
+  async function takePicture() {
+    try {
+      if (cameraRef) {
         const data = await cameraRef.current.takePictureAsync();
         console.log(data);
         setImage(data.uri);
-      } catch (e) {
         console.log(e);
       }
-    }
-  };
+    } catch (e) {}
+  }
 
   /*
    * savePicture()
    * Saves Picture from image variable to the devices MediaLibrary and empties variable.
    */
-  const saveImage = async () => {
+  async function saveImage() {
     if (image) {
       try {
-        await MediaLibrary.createAssetAsync(image);
-        alert("Picture save");
-        setImage(null);
+        //await MediaLibrary.createAssetAsync(image);
+        uploadImageAsync(image.uri, uuid);
+        navigation.goBack();
+        //setImage(null);
       } catch (e) {
         console.log(e);
       }
     }
-  };
+  }
 
   if (hasCameraPermission === false) {
     return <Text>No access</Text>;
   }
 
-  //Camera structure with icon-buttons to (re-)take pictures and swap the camera. 
+  //Camera structure with icon-buttons to (re-)take pictures and swap the camera.
   return (
     <View stlye={stlyes.container}>
-      {!image ? (
-        //Shows camera when there is no current picture.
-        <Camera style={stlyes.camera} type={type} ref={cameraRef} />
-      ) 
-      : 
-      (
-        //Shows the picture if one was taken
-        <Image source={{ uri: image }} style={stlyes.camera} />
-      )}
+      <View>
+        {!image ? (
+          //Shows camera when there is no current picture.
+          <Camera type={type} ref={cameraRef}>
+            <View style={stlyes.camera}>
+              <TouchableOpacity />
+            </View>
+          </Camera>
+        ) : (
+          //Shows the picture if one was taken
+          <Image source={{ uri: image }} style={stlyes.camera} />
+        )}
+      </View>
       <View>
         {image ? (
           //Buttons that are visible when a picture was taken.
@@ -120,11 +128,8 @@ const stlyes = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: "#fff",
     justifycontent: "center",
-    height: "100%",
   },
   camera: {
-    borderRadius: 20,
-    height: 100,
-    flex: 1,
+    height: 500,
   },
 });

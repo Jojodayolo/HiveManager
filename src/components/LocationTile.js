@@ -1,13 +1,19 @@
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import DeleteMenu from "../components/DeleteMenu";
 import { defaultStyles } from "../views/Styles";
-import { removeLocation } from "../../firebaseConfig";
+import { removeLocation, downloadImageAsync } from "../../firebaseConfig";
 
 export const LocationTile = (props) => {
   const navigation = useNavigation();
   const location = props.location;
+  const [imgURL, setimgURL] = useState();
+
+  useEffect(() => {
+    downloadImageAsync(location.imgUuid).then((url) => setimgURL(url));
+    console.log(imgURL);
+  });
   return (
     <TouchableOpacity
       style={[defaultStyles.locationTile]}

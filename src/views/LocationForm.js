@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button, Text, View, TextInput, ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,7 @@ import LocationCamera from "./LocationCamera";
 import CameraButton from "../components/CameraButton";
 import { createLocation } from "../../firebaseConfig";
 import { formStyles } from "./Styles";
+import uuid from "react-native-uuid";
 
 export const LocationForm = () => {
   //Various Variables of a location
@@ -14,9 +15,9 @@ export const LocationForm = () => {
   const [locationAddress, onChangeAddress] = React.useState("");
   const [locationNotes, onChangeNotes] = React.useState("");
   const [locationPhoto, onChangePhoto] = React.useState("");
-
   const navigation = useNavigation();
-
+  const picUuid = uuid.v4();
+  console.log(picUuid);
   /*
    * onDone()
    * Creates a new location with the entered values.
@@ -26,6 +27,7 @@ export const LocationForm = () => {
       name: locationName,
       address: locationAddress,
       notes: locationNotes,
+      imgUuid: picUuid,
     });
     navigation.goBack();
   };
@@ -81,7 +83,10 @@ export const LocationForm = () => {
           <CameraButton
             title={""}
             icon="camera"
-            onPress={() => navigation.navigate("LocationCamera")}
+            onPress={() =>
+              navigation.navigate("LocationCamera", { uuid: picUuid })
+            }
+            uuid={picUuid}
           />
         </View>
       </View>
