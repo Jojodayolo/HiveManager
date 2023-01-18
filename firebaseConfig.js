@@ -16,6 +16,7 @@ import {
   query,
   where,
   connectFirestoreEmulator,
+  deleteDoc,
 } from "firebase/firestore";
 import "firebase/firestore";
 
@@ -78,7 +79,6 @@ async function createUserInDB(firstName, surName) {
     });
   }
 }
-
 export async function getLocations() {
   const user = auth.currentUser;
 
@@ -104,7 +104,6 @@ export async function getLocations() {
 
   return locArray;
 }
-
 export async function getHives(locDocID) {
   const user = auth.currentUser;
 
@@ -133,12 +132,12 @@ export async function getHives(locDocID) {
   hivesSnapshot.forEach((hive) => {
     const tmp = hive.data();
     tmp.hiveID = hive.id;
+    tmp.locID = locDocID;
     hiveArray.push(tmp);
   });
 
   return hiveArray;
 }
-
 export async function getDocumentations(locDocID, hiveID) {
   const user = auth.currentUser;
 
@@ -173,7 +172,6 @@ export async function getDocumentations(locDocID, hiveID) {
   });
   return docsArray;
 }
-
 export async function createLocation(data) {
   const user = auth.currentUser;
   console.log(user);
@@ -222,7 +220,7 @@ export async function createHive(locDocID, data) {
   );
   const hivesQuery = query(hivesRef);
   const ref = await addDoc(hivesQuery, {
-    name: data.name,
+    name: data.name || "",
   });
 }
 export async function createDocumentation(locDocID, hiveID, data) {
@@ -274,13 +272,89 @@ export async function createDocumentation(locDocID, hiveID, data) {
   });
 } //????
 
-export async function removeLocation(uid) {} //????
-export async function removeHive(uid, locid) {} //????
-export async function removeDocumentation(uid, locid, hiveid) {} //????
+export async function removeLocation(locID) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+
+  const hives = getHives(locID);
+  (await hives).forEach((hive) => {
+    removeHive(locID, hive.hiveID);
+  });
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(db, "users", userDocID, "locations", locID);
+
+  await deleteDoc(docRef);
+}
+export async function removeHive(locID, hiveID) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //remove Docs from Hive
+  const hives = getDocumentations(locID, hiveID);
+  (await hives).forEach((doc) => {
+    removeHive(locID, hiveID, doc.docID);
+  });
+
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locID,
+    "hives",
+    hiveID
+  );
+
+  await deleteDoc(docRef);
+}
+export async function removeDocumentation(uid, locid, hiveid) {
+  const user = auth.currentUser;
+  //Get all Users and filter by uid
+  const q = query(collection(db, "users"), where("uid", "==", user.uid));
+  var userDocID;
+  //query the DocumentID
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    if (doc.data().uid === user.uid) {
+      userDocID = doc.id;
+    }
+  });
+
+  const docRef = doc(
+    db,
+    "users",
+    userDocID,
+    "locations",
+    locID,
+    "hives",
+    hiveID,
+    "documentations",
+    docID
+  );
+  await deleteDoc(docRef);
+}
 
 export async function editLocation(uid, data) {
   const locationRef = doc(db, "locations", "BJ");
   setDoc(cityRef, { capital: true }, { merge: true });
-} //????
+}
 export async function editHive(uid, locid, data) {} //????
 export async function editDocumentation(uid, locid, hiveid, data) {} //????

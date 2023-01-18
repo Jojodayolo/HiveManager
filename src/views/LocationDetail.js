@@ -47,9 +47,7 @@ export const LocationDetail = (props) => {
   useEffect(() => {
     try {
       getDocumentations(locID, hive.hiveID).then((docs) => setLocalDocs(docs));
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   });
 
   const onDocForm = () => {

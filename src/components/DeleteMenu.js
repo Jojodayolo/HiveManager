@@ -10,7 +10,7 @@ import { Entypo } from "@expo/vector-icons";
 
 const Divider = () => <View style={styles.divider} />;
 
-const DeleteMenu = () => {
+const DeleteMenu = (params) => {
   return (
     <Menu style={[styles.container]}>
       <MenuTrigger>
@@ -27,7 +27,11 @@ const DeleteMenu = () => {
       >
         <MenuOption text="Bearbeiten" />
         <Divider />
-        <MenuOption text="Löschen" customStyles={styles.deleteOption} />
+        <MenuOption
+          text="Löschen"
+          customStyles={styles.deleteOption}
+          onSelect={params.onDelete}
+        />
       </MenuOptions>
     </Menu>
   );

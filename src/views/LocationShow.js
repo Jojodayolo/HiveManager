@@ -8,7 +8,7 @@ import {
   DividerVertical,
   DividerHorizontal,
 } from "../components/designComonents";
-import { getHives } from "../../firebaseConfig";
+import { getHives, removeHive } from "../../firebaseConfig";
 
 //The List Item to be rendered
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -20,7 +20,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
       <Text style={{ paddingLeft: 15 }}>{item.name || ""}</Text>
     </View>
     <View flex={2} style={{}}>
-      <DeleteMenu />
+      <DeleteMenu onDelete={() => removeHive(item.locID, item.hiveID)} />
     </View>
   </TouchableOpacity>
 );
@@ -48,7 +48,9 @@ export const LocationShow = ({ route }) => {
 
   //Get all locations and filter the Selected one
   useEffect(() => {
-    getHives(location.docID).then((hives) => setHiveList(hives));
+    try {
+      getHives(location.docID).then((hives) => setHiveList(hives));
+    } catch (e) {}
   });
 
   //Setting the Navigation Title and Buttons

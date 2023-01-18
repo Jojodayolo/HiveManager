@@ -3,10 +3,11 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import DeleteMenu from "../components/DeleteMenu";
 import { defaultStyles } from "../views/Styles";
+import { removeLocation } from "../../firebaseConfig";
 
 export const LocationTile = (props) => {
   const navigation = useNavigation();
-  let location = props.location;
+  const location = props.location;
   return (
     <TouchableOpacity
       style={[defaultStyles.locationTile]}
@@ -15,7 +16,10 @@ export const LocationTile = (props) => {
       }
     >
       <View flex={1} style={{ flex: 1 }}>
-        <DeleteMenu style={styles.menu} />
+        <DeleteMenu
+          style={styles.menu}
+          onDelete={() => removeLocation(location.docID)}
+        />
       </View>
       <View flex={2} style={styles.content}>
         <Image
