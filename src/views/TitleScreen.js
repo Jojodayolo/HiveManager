@@ -21,6 +21,12 @@ export const TitleScreen = () => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: "HiveManager",
+      headerRight: () => (
+        <Button
+          title="Impressum"
+          onPress={() => navigation.navigate("Impressum")}
+        />
+      ),
     });
   });
 
