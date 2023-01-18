@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   connectAuthEmulator,
+  signOut,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -52,6 +53,12 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 //connectStorageEmulator(storage, "localhost", 9199);
 
+export async function Logout() {
+  if (auth.currentUser !== null) {
+    signOut(auth);
+  }
+}
+
 export async function SignUp(eMail, password, firstName, surName) {
   createUserWithEmailAndPassword(auth, eMail, password)
     .then((userCredential) => {
@@ -90,28 +97,31 @@ async function createUserInDB(firstName, surName) {
 }
 export async function getLocations() {
   const user = auth.currentUser;
+  if (user !== null) {
+    const q = query(collection(db, "users"), where("uid", "==", user.uid));
+    var userDocID;
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      if (doc.data().uid === user.uid) {
+        userDocID = doc.id;
+      }
+    });
 
-  const q = query(collection(db, "users"), where("uid", "==", user.uid));
-  var userDocID;
-  const querySnapshot = await getDocs(q);
-  querySnapshot.forEach((doc) => {
-    if (doc.data().uid === user.uid) {
-      userDocID = doc.id;
-    }
-  });
+    const colRef = collection(db, "users", userDocID, "locations");
+    const locationsQuery = query(colRef);
 
-  const colRef = collection(db, "users", userDocID, "locations");
-  const locationsQuery = query(colRef);
+    const locationsSnapshot = await getDocs(locationsQuery);
+    var locArray = [];
+    locationsSnapshot.forEach((loc) => {
+      const tmp = loc.data();
+      tmp.docID = loc.id;
+      locArray.push(tmp);
+    });
 
-  const locationsSnapshot = await getDocs(locationsQuery);
-  var locArray = [];
-  locationsSnapshot.forEach((loc) => {
-    const tmp = loc.data();
-    tmp.docID = loc.id;
-    locArray.push(tmp);
-  });
-
-  return locArray;
+    return locArray;
+  } else {
+    return [];
+  }
 }
 export async function getHives(locDocID) {
   const user = auth.currentUser;

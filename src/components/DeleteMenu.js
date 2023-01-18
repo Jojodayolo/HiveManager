@@ -1,7 +1,7 @@
 /**
  * DeleteMenu.js
- * 
- * Component used to show a small menu for deleting/editing hives/locations on a hamburger icon.  
+ *
+ * Component used to show a small menu for deleting/editing hives/locations on a hamburger icon.
  */
 import { StyleSheet, View } from "react-native";
 import React from "react";
@@ -12,7 +12,6 @@ import {
   MenuTrigger,
 } from "react-native-popup-menu";
 import { Entypo } from "@expo/vector-icons";
-
 
 const Divider = () => <View style={styles.divider} />;
 
@@ -31,8 +30,6 @@ const DeleteMenu = (params) => {
           },
         }}
       >
-        <MenuOption text="Bearbeiten" />
-        <Divider />
         <MenuOption
           text="Löschen"
           customStyles={styles.deleteOption}

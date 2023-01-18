@@ -9,7 +9,7 @@ import { LocationTile } from "../components/LocationTile";
 import SuperGridSectionList from "react-native-super-grid";
 import { useNavigation } from "@react-navigation/native";
 import { defaultStyles } from "./Styles";
-import { getLocations } from "../../firebaseConfig";
+import { getLocations, Logout } from "../../firebaseConfig";
 
 
 export const LocationList = ({ route }) => {
@@ -30,7 +30,11 @@ export const LocationList = ({ route }) => {
       headerLeft: () => (
         <Button
           title="Ausloggen"
-          onPress={() => navigation.navigate("TitleScreen")}
+          onPress={() => {
+            Logout()
+              .then(console.log("Loged Out"))
+              .then(navigation.navigate("TitleScreen"));
+          }}
         />
       ),
       headerTitle: "Übersicht",
